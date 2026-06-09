@@ -1,0 +1,12 @@
+---
+id: note_01jar5fty8fzmtypqn74dm66qm
+public: true
+---
+
+Claude says: In the context of computer science academia, "to scoop" (verb) refers to the act of publishing or presenting research findings or ideas before another researcher or group who is working on the same or a very similar topic.
+I understand why getting scooped is unfortunate, but think it is over-dramatized. I think there are clearly bad ways it can occur, which lead people to classify any form of scooping as bad (though perhaps these cases are more plagiarism than anything "scooping"). TL;DR, if you are doing research for the fame, then getting scooped will get in the way. If you are doing research because you think it should be done, getting scooped means you were doing something which would've been done anyways and you should be happy someone else also wished for this research to be done.
+To be concrete, I think that these forms of scooping are indeed bad:
+- stealing someone's ongoing research, doing it on your own faster than they are able to, and publishing it as your own: dishonest, norm-violating
+- doing slightly different concurrent work, and the first one establishes a worse starting point for the line of research: creates worse outcomes
+Most of the time, I think scooping is far-closer to zero-sum, and people are reacting to being on the negative side of this interaction. Scientific funding and publishing rewards first place far more than second place, which surely creates good incentives to move fast, but likely also contributes to this bitterness and an incentive to publish before being fully confident. Interestingly, on the point of incentivizing research, the optimal incentive structure probably *also* leads to concurrent work and scooping—some areas are too important not to. You can very well imagine scenarios where adding another ~identical research effort reduces the likelihood of human error that you miss an important discovery by enough to justify adding it.
+I'm not well-acquainted with the scientific funding system or its statistics, and tend to think it does a reasonable job, given how much valuable work has resulted, so I don't have a sense for whether the discrepancy between first- and nth-place is in fact justified, but if I had to guess, lowering it would be better.

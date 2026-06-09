@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>arunim.fyi</title>
+      <link>https://arunim.fyi</link>
+      <description>Last 10 notes on arunim.fyi</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Post-AGI equilibria</title>
+    <link>https://arunim.fyi/Post-AGI-equilibria</link>
+    <guid>https://arunim.fyi/Post-AGI-equilibria</guid>
+    <description>First, I’ll maybe add the set of questions that I’m hoping to answer during the conference. Preferably fairly concrete, to increase the likelihood that I successfully answer them.</description>
+    <pubDate>Fri, 29 May 2026 23:17:54 GMT</pubDate>
+  </item><item>
+    <title>do</title>
+    <link>https://arunim.fyi/do</link>
+    <guid>https://arunim.fyi/do</guid>
+    <description>you can just do things, you should do (good) things (duh), but should is bad, so ideally, you want to do things. a potential reader remarks: “but I don’t want to do the things that I should do” Whatever! There are things you do want to do.</description>
+    <pubDate>Fri, 29 May 2026 23:17:54 GMT</pubDate>
+  </item><item>
+    <title>models of rsi</title>
+    <link>https://arunim.fyi/models-of-rsi</link>
+    <guid>https://arunim.fyi/models-of-rsi</guid>
+    <description>Status: rough draft What even is RSI? Here’s my attempt at defining it. TLDR I think it means humans out of the loop of AI development Below are some models of how RSI comes about.</description>
+    <pubDate>Sat, 23 May 2026 16:10:04 GMT</pubDate>
+  </item><item>
+    <title>AI progress</title>
+    <link>https://arunim.fyi/AI-progress</link>
+    <guid>https://arunim.fyi/AI-progress</guid>
+    <description>I wish to revise this page. I have a vision of a well-constructed database that pulls tons of info from Epoch AI, mostly, and perhaps some others, and analyzes the factors I care most about.</description>
+    <pubDate>Fri, 15 May 2026 15:58:20 GMT</pubDate>
+  </item><item>
+    <title>RSI</title>
+    <link>https://arunim.fyi/RSI</link>
+    <guid>https://arunim.fyi/RSI</guid>
+    <description>Defining RSI What is RSI?? I think it means that humans exit the loop of AI development. But like … how much? It could be the case that humans are cheaper than automated alternatives for a large variety of physical labor for some time.</description>
+    <pubDate>Fri, 15 May 2026 15:58:20 GMT</pubDate>
+  </item><item>
+    <title>Notes on May 2026 AI Revenue</title>
+    <link>https://arunim.fyi/Notes-on-May-2026-AI-Revenue</link>
+    <guid>https://arunim.fyi/Notes-on-May-2026-AI-Revenue</guid>
+    <description>In the backseat of an Uber with my friend Richard a few days ago, I was trying to wrap my head around the fact that Anthropic’s revenue had been growing at a rate of 80x/year for the last ...</description>
+    <pubDate>Thu, 14 May 2026 18:10:52 GMT</pubDate>
+  </item><item>
+    <title>stuff</title>
+    <link>https://arunim.fyi/stuff</link>
+    <guid>https://arunim.fyi/stuff</guid>
+    <description>List of stuff I carry around or otherwise use that others might find useful or that I might want to reflect on later in life. Stuff on my person iPhone 12 Wallet: Clipper card + credit card + ID + keys Apple Watch Stuff in my backpack MacBook Air Airpods Pro 3 they did not live up to my admittedly high expectations Anker MagGo Power Bank (10K, Slim) USB-C + wireless Anker Prime 67W GaN Charger (3 Ports) A good USB-C cable Scosche Keychain Apple Watch Charger Hand sanitizer Water bottle Stuff at my desk Monitor: Anything 4k works well imo Mac Mini some USB-C magsafe things which make plugging &amp; unplugging easy.</description>
+    <pubDate>Thu, 14 May 2026 18:10:52 GMT</pubDate>
+  </item><item>
+    <title>projects</title>
+    <link>https://arunim.fyi/projects</link>
+    <guid>https://arunim.fyi/projects</guid>
+    <description>Whole lotta projects that I’ve started or ideated. I don’t care for getting scooped so if you’re interested, please go ahead and do them! Then tell me about it so I can thank you / ask you about how it went.</description>
+    <pubDate>Sun, 10 May 2026 01:31:11 GMT</pubDate>
+  </item><item>
+    <title>Posting Substack links on x.com</title>
+    <link>https://arunim.fyi/Posting-Substack-links-on-x.com</link>
+    <guid>https://arunim.fyi/Posting-Substack-links-on-x.com</guid>
+    <description>It sucks to post your Substack post’s links on x.com. Your posts might get de-boosted, but even worse, for those of us who only get 2 likes anyways, the link preview looks bad! Substack applies a “focus-crop” and a weird watermark.</description>
+    <pubDate>Sun, 26 Apr 2026 22:03:45 GMT</pubDate>
+  </item><item>
+    <title>creating instead of consuming</title>
+    <link>https://arunim.fyi/creating-instead-of-consuming</link>
+    <guid>https://arunim.fyi/creating-instead-of-consuming</guid>
+    <description>Chris Lakin had this great post back in the day (archived here) about relaxing by creating instead of by consuming. I haven’t read it in a while, but it still lingers on account of both my bad habit of poor quality relaxation and my related media consumption addiction.</description>
+    <pubDate>Sun, 26 Apr 2026 22:03:45 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>

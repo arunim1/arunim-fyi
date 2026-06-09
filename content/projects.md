@@ -1,0 +1,110 @@
+---
+id: note_01jar5fty8fret462skj210t6q
+aliases:
+  - "project"
+public: true
+---
+
+Whole lotta projects that I've started or ideated. I don't care for getting [[scooped]] so if you're interested, please go ahead and do them! Then tell me about it so I can thank you / ask you about how it went.
+
+- Subliminal learning backdoors
+	- I suspect I won't actually run this, but want to explain the experiment I want to see in some detail. The general question is "how undetectable can data that instills backdoors be?" and "what is the best way to create data that instills backdoors?", where best = undetectable and strong and cross-model.
+	- Seems reasonable to combine a few methods, e.g.: 
+		- Phantom transfer: https://arxiv.org/abs/2602.04899
+		- Subliminal steering: https://arxiv.org/abs/2604.25783v1
+		- Strong poisoned data: https://www.aisi.gov.uk/research/poisoning-attacks-on-llms-require-a-near-constant-number-of-poison-samples
+	- In short, maybe combine the best of all these. 
+	- See if we can improve upon Phantom Transfer or make it otherwise stronger using Subliminal Steering, i.e. using control vectors. Practically: replace the system prompt for the teacher generations with control vectors. For trigger / backdoor-style phantom transfer, again, use control vectors instead of paraphrasing or system prompts to achieve stronger versions of the desired outcome. 
+	- Do it at scale, with varying numbers of poisoned documents. 
+	- Oops nvm this was done in the phantom transfer paper itself, but they didn't scale it much: https://arxiv.org/pdf/2602.04899#page=6.32
+	- Odd that the subliminal steering paper doesn't cite the phantom transfer paper though. 
+- Better analysis on the intersection of [[Safetywashing: Do AI Safety Benchmarks Actually Measure Safety Progress?|safetywashing]] and [[Trading Inference-Time Compute for Adversarial Robustness]]
+	- run [[deepseek]] R1, V3 and distill-qwen 70, qwen 70, and distill-llama 70, llama 70 each on HarmBench, to evaluate whether a) the inference time compute boost you get transfers across distillation and b) whether it improves safety without an explicit reward (as we assume deepseek would). h/t Richard and Bruce for brainstorming session
+- Train a network on top of Apple's CoreML to be a *proper* typing tutor, which analyzes finger movements to make sure the user is using the correct finger for each keystroke.
+	- https://chatgpt.com/share/681c2e2e-f818-8002-aa2e-dca30c2ccc15
+- Quick classifier out of this https://huggingface.co/datasets/Anthropic/persuasion/viewer/default/train by anthropic, using some OS model like Llama-8B, chopping off everything but the first 5 layers, adding 1-2 straight up NN layers and then training the whole thing to predict ratings
+	- note: sigmoid the output and then map from 0-1 to 1-8 or whatever,
+	- note: check that this hasn't already been done, bc the paper's nearly a year old atp.
+	- note: don't forget to make a test set!
+	- then eval whatever model you want and test things like is R1 more persuasive than humans yet?
+	- ok honestly this has some drawbacks thanks to the spurious correlation that'll come up which anchors the model in believing things with LLM-smell (vocab, style, punctuation) are less persuasive
+		- could *maybe* be mitigated through something silly like running all the human data through claude—trying to have it re-write it without changing how persuasive it is at all.
+		- or e.g. hold out claude 3 entirely as a test set for this! *I like this idea better.*
+- benchmarking hub for [LLM evals](/tags/ai/eval) which uses that paper ([1](https://arxiv.org/abs/2309.08638), [2](https://arxiv.org/abs/2402.14992)) which finds that you only need like 20 samples or something, "trains"	on cheap, OS models then evals on expensive closed models with appropriate confidence
+	- now that I think about it, why didn't they do it?, why didn't Epoch AI do it? etc.
+		- reached out: the author hasn't done it because a) no funding to do this, b) PhD requirements to fulfill are higher priority
+	- seems worthwhile to do + appropriately bound with correctly low-confidence
+		- will do, would want to run it by proper stats people (read: epoch)
+	- https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/
+- Estimate (active) parameter count by using inference speeds (output tokens / second, time to first token). + time taken to make the api requests themselves. Or at least plot model size against these. some example data from [this](https://github.com/ray-project/llmperf-leaderboard) or [this](https://github.com/ray-project/llmperf)
+	- for Llama 2 at least, there's no clear trend in size vs. ttft, but is a trend in output tokens / sec
+	- obviously you'd like to know what hardware different models you're comparing are running on, and maybe even kernels and lower level optimizations, but ehhhh maybe you can still draw the line and see where the models end up.
+- try to solve two hop curse by interjecting a $W_U \times W_E$ occasionally and optionally.
+- Better version of: https://adnauseam.io/ and https://bengrosser.com/projects/go-rando/ which is optimized to show you content which you are happy to have seen on reflection.
+	- a) may need collecting of a lot of data, but it's for a good cause i promise
+	- b) if the concern is sparse reward because the user's reaction while scrolling is not indicative, then have the small vision LLMs roleplay a very smart human. or have like weekly surveys which you just stick in the vision LLM fine-tuning data or context window.
+	- so so so valuable if this takes off. small subscription fee may be in order.
+	- see [[middleware]]
+- Comment Everywhere \[UPDATE: Huge win for people just like me; https://curius.app/ exists and is already used by many cool people.\]
+	- I basically use Readwise to do a private version of this. Could be a cool feature if a Readwise employee is reading this.
+	- A browser extension, which lets you see a Twitter-like feed of comments on any webpage you visit—comments that people you follow have left (or *maybe* that the recommendation algorithm thinks you might be interested in). Also, of course, allows you to comment on any webpage.
+	- Motivation: people seem to spend a good amount of time, not only on the addictive content of reels and YouTube videos and Twitter itself, but also on reading and writing the comments in these or on these fora. I imagine that at least for the "following-only" style comments, the downside in terms of "brain rot" is significantly lower than the rot induced by recommendation algorithms and the promotion of actual content itself, and that the upside can be substantial. I think people tend to use Twitter as kind of this "Comment Everywhere" thing already, where they write their thoughts about something and add a link to the thing that they read / that prompted these thoughts, but there is no clear way to go *from* that webpage to what your friends thought about it, if they've also encountered it.
+	- I imagine that the best implementation integrates with Twitter / other apps so that you can post your exact comment there as well but whatever.
+	- Some comment sections are toxic thanks to anonymity (see Polymarket haha). However, if it's just follower-based, or better yet, integrates so you only get comments from ppl you follow on X, it'd be pretty good. Forget a recommendation algorithm all together, other people can do that.
+	- This has been tried but didn't take off
+		- https://www.binwang.me/2013-03-29-Comment-Everywhere.html
+		- https://chromewebstore.google.com/detail/comment-everywhere/cnelhcjkccamojhmmncfdhdhlgocmdjc?pli=1
+		- horrendous examples: https://chromewebstore.google.com/detail/clamor-comment-anywhere/adobgmkomchnognfpmcpcdjanecjppjn
+		- [different](https://chromewebstore.google.com/detail/talk-and-comment-voice-no/djnhkfljnimcpelfndpcjcgngmefaobl), weirdly popular?
+		- funny [opposite](https://chromewebstore.google.com/detail/shut-up-comment-blocker/oklfoejikkmejobodofaimigojomlfim)
+	- I imagine that the vision in prior implementations is just lacking, or it required a threshold, instead of integrating with existing services and piggybacking off of X / bsky as this would.
+- Make a nice animated explanation of the curse of dimensionality with polar coordinates
+	- basically thinking like: eg if alpha is 90 then it doesn't rly matter that beta is. overall it's 90. and you can flip alpha an beta and get the same result
+		- check that this is correct, thought about it for 1 minute while sick
+	- johnson lindenstrauss lemma as well?
+- GBRT Extension
+	- [[gbrt]] but scalable seems intuitively doable. make it happen.
+- Trojan Detection like https://github.com/ethz-spylab/rlhf_trojan_competition
+	- Goal: gradient through/bypass the sampling
+		- [[GCG]]
+		- Population-based, activation-informed attack
+		- simple model to map ± 2 layers of LLM to reward model, skipping sampling.
+		- Look into VAE re-parameterization trick, see Pratik Lecture 12/6/23
+		  According to Pratik, the sampling from logits is p much done by Gumbel-Softmax which can be reversed.
+	- Super-low effort report to get others on board
+	- Translate to Marius project and post somewhere
+	- Figure out how this changes based on sequential outputs… yikes. not the end of the world, just seems way more complicated, convoluted, and compute-intensive.
+		- figured it out, seems bad but not thatttt bad
+	- what happens if you patch a forward pass with residual stream from the reward model evaluating something bad? (think nnsight)
+		- idea being like if the reward model was originally from the same base, maybe the directions are roughly similar?? really not super principled and useful, but could just work.
+		- alternatively, backprop after a few tokens based on the “low reward” response, and then just take the average over these vectors, and patch it everywhere to get some general “Bad” direction
+- Chess average centipawn loss (started here: https://github.com/arunim1/acl)
+	- Evaluate, think up some fun plots which might be of interest
+	- Generate 1-3 nice plots
+	- Post on Github, garden, and Twitter
+- Jailbreaking
+	- Assistant response PAIR attack
+	- Evaluation
+	- Super-low effort report to get a prof to sponsor
+- [[fog-of-war chess]] bot \[UPDATE: Huge win for people just like me; someone did this recently https://arxiv.org/abs/2506.01242 \]
+	- Holy frijoles this is so doable with lc0 as a starting point
+	- Try and fail at the additively-decomposable game extension of results
+		- partial success (trivial part)
+	- Do the non-trivial part: does R-NaD get to Pareto optimal? why or why not?
+	- 4x4 via pyspiel self-construct custom
+	- modify NN architecture to align with deepnash
+	- Tons of training
+	- High effort af report, even if majority of it is summary of what we learned.
+	- Evals with and without heuristics
+	- pre-training on PGNs thing oops
+	- eval on SBC for fun
+	- presentation for 620 submission
+	- NashConv evals
+	- (recurrent seems vital, think carefully)
+	- something like “not memory-0” or not “markovian” like their implementation of stratego was
+- SBC
+	- Fix M-FOS
+	- Piecewise results
+	- Frighteningly low-effort draft, will become a mid-point report
+- Econvolution
+	- Finish notebook, run 1 solid test, post writeup
