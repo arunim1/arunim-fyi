@@ -23,4 +23,4 @@ Encryption uses libsodium under the hood: Argon2id (m=32 MiB, t=2) for key deriv
 
 ## Provenance
 
-`.source-commit` always names the source-repo SHA the current build came from. Each commit on this repo is signed by Arunim's personal SSH signing key — look for the "Verified" badge on github.com. History starts 2026-06-09 — the repo was reset to a fresh root commit when it went public.
+`.source-commit` always names the source-repo SHA the current build came from. Each commit on this repo is signed by Arunim's personal SSH signing key — look for the "Verified" badge on github.com.
