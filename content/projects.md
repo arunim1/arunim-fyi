@@ -7,6 +7,7 @@ public: true
 
 Whole lotta projects that I've started or ideated. I don't care for getting [[scooped]] so if you're interested, please go ahead and do them! Then tell me about it so I can thank you / ask you about how it went.
 
+- AI safety index, which is basically like an inverse of an AI risk index. Could even e.g. use the same benchmarks and data from CAIS's dashboard, but apply the Epoch capabilities index methodology to get more comparable numbers, and potentially pull in other safety benchmarks or risk-related benchmarks from model safety reports. 
 - Subliminal learning backdoors
 	- I suspect I won't actually run this, but want to explain the experiment I want to see in some detail. The general question is "how undetectable can data that instills backdoors be?" and "what is the best way to create data that instills backdoors?", where best = undetectable and strong and cross-model.
 	- Seems reasonable to combine a few methods, e.g.: 
@@ -36,6 +37,7 @@ Whole lotta projects that I've started or ideated. I don't care for getting [[sc
 	- seems worthwhile to do + appropriately bound with correctly low-confidence
 		- will do, would want to run it by proper stats people (read: epoch)
 	- https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard#/
+	- finally, ages later, I think this has been done: https://arxiv.org/abs/2606.20626 . thank you SPAR. 
 - Estimate (active) parameter count by using inference speeds (output tokens / second, time to first token). + time taken to make the api requests themselves. Or at least plot model size against these. some example data from [this](https://github.com/ray-project/llmperf-leaderboard) or [this](https://github.com/ray-project/llmperf)
 	- for Llama 2 at least, there's no clear trend in size vs. ttft, but is a trend in output tokens / sec
 	- obviously you'd like to know what hardware different models you're comparing are running on, and maybe even kernels and lower level optimizations, but ehhhh maybe you can still draw the line and see where the models end up.

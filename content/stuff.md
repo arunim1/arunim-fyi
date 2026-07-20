@@ -5,7 +5,7 @@ public: true
 List of stuff I carry around or otherwise use that others might find useful or that I might want to reflect on later in life.
 ## Stuff on my person
 * iPhone 12
-* Wallet: Clipper card + credit card + ID + keys
+* Wallet: my ~4 most important cards (including my ID) + keys on an attached keychain. I have a gifted "crabbywallet" apparently, which worked well for a few years then started to come apart a bit, but I still enjoy the form factor. 
 * Apple Watch
 ## Stuff in my backpack
 * MacBook Air
@@ -18,8 +18,9 @@ List of stuff I carry around or otherwise use that others might find useful or t
 * Scosche Keychain Apple Watch Charger
 * Hand sanitizer
 * Water bottle
+* Aranet4 CO2 monitor
 ## Stuff at my desk
-* Monitor: Anything 4k works well imo
+* Monitor: Anything 4k works well, in my opinion. 
 * Mac Mini
 * some USB-C magsafe things which make plugging & unplugging easy.
 * xiaomi monitor lamp (gift)
@@ -36,9 +37,9 @@ List of stuff I carry around or otherwise use that others might find useful or t
 - Darn Tough socks (wool)
 	- one of my best purchases ever, I think. I bought five pairs, lost one, and plan on never buying socks again unless I lose more pairs. They're basically the only socks I wear.
 - Skincare: I use benzoyl peroxide from PanOxyl, a tinted sunscreen from EltaMD, and Differin (adapalene).
-- Gym membership 
+- Gym membership - currently YMCA 
 - A nice mattress 
 - A nice pillow 
 - Loop Dream earplugs 
 - A mediocre eyemask
-- Matador Packable Shower Towel – Large: surprisingly effective!
+- Matador Packable Shower Towel – Large: surprisingly effective, though I really only use it for travel!

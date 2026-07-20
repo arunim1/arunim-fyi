@@ -29,4 +29,9 @@ Not all the traditional chess wisdom transfers! Hikaru himself has been beat on 
 
 I also think ELO : material handicap ratio would be very different in fog-of war. A player with an elo of +150 compared to me could very well beat me while down a queen (unfortunately I speak from experience here), whereas I doubt the same holds for normal chess.
 
+Some other things to expand on later: 
+- I tried playing ~100 games sacking a queen in the first few moves. (Botez Gambit Fog-of-War)
+- I've started to try to play normal blitz where I am bound by the fog and my opponent isn't. (Unilateral Fog-of-War Chess) 
+	- It's very hard, but I'm getting better.
+
 [^1]: TODO Someone should fact check this, since it seems reasonable that the fact that poker actions are public means that mixed strategies are meaningless. But [Nate Silver said he agrees](https://open.substack.com/pub/natesilver/p/5545-is-a-really-close-race?r=6mm1j&selection=c8ac47c4-bcfc-45ab-af75-de0525d93984) so IDK. I'll get around to fact checking in a while.
