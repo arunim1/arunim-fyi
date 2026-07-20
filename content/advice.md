@@ -2,14 +2,7 @@
 public: true
 ---
 Some advice, I'll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn't advice despite being titled advice, and is instead just reminders of obvious facts about the world.
-### More college-specific 
-(But again, I think most advice applies to everyone)
-
-- College is a great time to make a wide wide range of friends. I don't think I did this that well, because I didn't try. 
-- The primary indicator (by far) for whether you should take a course is how good you think the prof is, how much you'd enjoy talking to them and learning from them, etc. 
-- Read [Euan's advice](https://space.ong.ac/escaping-flatland) now and when you get far enough that you're thinking about job-related things, read it again.
-- Find good mentors and be a good mentee (I was bad at the latter, and still don't know how to do it well yet, but you can probably look it up or actually just ask someone smarter than me). 
-
+### General
 - I think you should spend your time [[creating instead of consuming|creating]] stuff with others. See [this post](https://benbyfax.substack.com/p/aliveness )
 - Cold email. it's not too hard to find most people's emails, or other ways of emailing them. Follow up with them a few days afterwards if they don't respond. 
 - If you primarily want to do good in the world, read [Sophie's post](https://sophieinkhaven.substack.com/cp/193324672).
@@ -65,3 +58,11 @@ Maybe read this block of text from a [podcast I enjoyed](https://www.dwarkesh.co
 > There’s this LeBron quote where he talks about how before he started in the league he was worried that everyone being incredibly good. He gets there and then he realizes that actually, once people hit financial stability, they relax a bit and he realizes, “oh, this is going to be easy.”
 > 
 > I don't think that's quite true because I think in AI research most people actually care quite deeply. But there's caring about your problem and there's also just caring about the entire stack and everything that goes up and down, going explicitly and fixing things that aren't your responsibility to fix because overall it makes the stack better.
+
+### More college-specific 
+(But again, I think most advice applies to everyone)
+
+- College is a great time to make a wide wide range of friends. I don't think I did this that well, because I didn't try. 
+- The primary indicator (by far) for whether you should take a course is how good you think the prof is, how much you'd enjoy talking to them and learning from them, etc. 
+- Read [Euan's advice](https://space.ong.ac/escaping-flatland) now and when you get far enough that you're thinking about job-related things, read it again.
+- Find good mentors and be a good mentee (I was bad at the latter, and still don't know how to do it well yet, but you can probably look it up or actually just ask someone smarter than me). 
