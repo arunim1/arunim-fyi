@@ -24,4 +24,4 @@ Of course this is funny, but suspect, as you would certainly have more American 
 
 If true, the actual explanation that I currently find most compelling (courtesy of one of my non-researcher co-workers) is that in the collection of pre-training data, instances or mentions of third-world countries are concentrated in various things like academic papers with ethical or moral implications, just tying the idea of a country like Nigeria or Pakistan more closely to the concept of ethics or values. I don't think this is fully explanatory either, but seems partially correct, and offers more detail than just the vague "it's the pre-training data".
 
-This can also be used to measure [[risk aversion]]!
+This can also be used to measure [[risk aversion in llms]]!

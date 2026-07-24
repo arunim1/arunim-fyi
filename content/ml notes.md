@@ -7,8 +7,6 @@ public: true
 
 todo organize these!
 
-[[reinforcement learning]]
-
 ## Training
 
 - ZeRO stage 1:

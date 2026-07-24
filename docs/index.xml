@@ -6,6 +6,30 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Utility Engineering</title>
+    <link>https://arunim.fyi/Utility-Engineering</link>
+    <guid>https://arunim.fyi/Utility-Engineering</guid>
+    <description>www.emergent-values.ai/ arxiv.org/abs/2502.08640 As AIs rapidly advance and become more agentic, the risk they pose is governed not only by their capabilities but increasingly ...</description>
+    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
+  </item><item>
+    <title>ml notes</title>
+    <link>https://arunim.fyi/ml-notes</link>
+    <guid>https://arunim.fyi/ml-notes</guid>
+    <description>todo organize these! Training ZeRO stage 1: data parallel all params on all gpus local loss, local gradients construct the global gradient on every by averaging the local gradients ...</description>
+    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
+  </item><item>
+    <title>risk aversion in llms</title>
+    <link>https://arunim.fyi/risk-aversion-in-llms</link>
+    <guid>https://arunim.fyi/risk-aversion-in-llms</guid>
+    <description>TLDR: The (at the time of writing) nascent field of risk preferences in LLMs is currently evaluating models in a suboptimal way which too-directly analogize LLMs to humans, and result ...</description>
+    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
+  </item><item>
+    <title>projects</title>
+    <link>https://arunim.fyi/projects</link>
+    <guid>https://arunim.fyi/projects</guid>
+    <description>A number of projects that I’ve started or thought of at some point or another. I don’t care for getting scooped so if you’re interested, please go ahead and do them! Then, do tell me about it so that I can thank you / ask you about how it went.</description>
+    <pubDate>Thu, 23 Jul 2026 18:30:08 GMT</pubDate>
+  </item><item>
     <title>advice</title>
     <link>https://arunim.fyi/advice</link>
     <guid>https://arunim.fyi/advice</guid>
@@ -16,12 +40,6 @@
     <link>https://arunim.fyi/Calvin-and-Hobbes</link>
     <guid>https://arunim.fyi/Calvin-and-Hobbes</guid>
     <description>Calvin and Hobbes is truly a top tier piece of media for me. Maybe mostly due to fortune, where a family friend gifted a box set of two decades of Calvin and Hobbes to me after occupying my room for some time.</description>
-    <pubDate>Sat, 18 Jul 2026 18:30:09 GMT</pubDate>
-  </item><item>
-    <title>projects</title>
-    <link>https://arunim.fyi/projects</link>
-    <guid>https://arunim.fyi/projects</guid>
-    <description>Whole lotta projects that I’ve started or ideated. I don’t care for getting scooped so if you’re interested, please go ahead and do them! Then tell me about it so I can thank you / ask you about how it went.</description>
     <pubDate>Sat, 18 Jul 2026 18:30:09 GMT</pubDate>
   </item><item>
     <title>Deciding if something is on the frontier</title>
@@ -47,24 +65,6 @@
     <guid>https://arunim.fyi/disclaimers</guid>
     <description>This is a place for disclaimers, disclosures, credits, and hedges of all sorts. Fairly often I will fall back into the bad habit of being disincentivized from writing or generally broadcasting my thoughts publicly by various concerns that can be mitigated by some kind of kneecapping, disclaimers, or hedges.</description>
     <pubDate>Mon, 15 Jun 2026 04:07:42 GMT</pubDate>
-  </item><item>
-    <title>Post-AGI equilibria</title>
-    <link>https://arunim.fyi/Post-AGI-equilibria</link>
-    <guid>https://arunim.fyi/Post-AGI-equilibria</guid>
-    <description>First, I’ll maybe add the set of questions that I’m hoping to answer during the conference. Preferably fairly concrete, to increase the likelihood that I successfully answer them.</description>
-    <pubDate>Fri, 29 May 2026 23:17:54 GMT</pubDate>
-  </item><item>
-    <title>do</title>
-    <link>https://arunim.fyi/do</link>
-    <guid>https://arunim.fyi/do</guid>
-    <description>you can just do things, you should do (good) things (duh), but should is bad, so ideally, you want to do things. a potential reader remarks: “but I don’t want to do the things that I should do” Whatever! There are things you do want to do.</description>
-    <pubDate>Fri, 29 May 2026 23:17:54 GMT</pubDate>
-  </item><item>
-    <title>models of rsi</title>
-    <link>https://arunim.fyi/models-of-rsi</link>
-    <guid>https://arunim.fyi/models-of-rsi</guid>
-    <description>Status: rough draft What even is RSI? Here’s my attempt at defining it. TLDR I think it means humans out of the loop of AI development Below are some models of how RSI comes about.</description>
-    <pubDate>Sat, 23 May 2026 16:10:04 GMT</pubDate>
   </item>
     </channel>
   </rss>

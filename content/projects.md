@@ -5,7 +5,7 @@ aliases:
 public: true
 ---
 
-Whole lotta projects that I've started or ideated. I don't care for getting [[scooped]] so if you're interested, please go ahead and do them! Then tell me about it so I can thank you / ask you about how it went.
+A number of projects that I've started or thought of at some point or another. I don't care for getting [[scooped]] so if you're interested, please go ahead and do them! Then, do tell me about it so that I can thank you / ask you about how it went.
 
 - AI safety index, which is basically like an inverse of an AI risk index. Could even e.g. use the same benchmarks and data from CAIS's dashboard, but apply the Epoch capabilities index methodology to get more comparable numbers, and potentially pull in other safety benchmarks or risk-related benchmarks from model safety reports. 
 - Subliminal learning backdoors
@@ -17,10 +17,10 @@ Whole lotta projects that I've started or ideated. I don't care for getting [[sc
 	- In short, maybe combine the best of all these. 
 	- See if we can improve upon Phantom Transfer or make it otherwise stronger using Subliminal Steering, i.e. using control vectors. Practically: replace the system prompt for the teacher generations with control vectors. For trigger / backdoor-style phantom transfer, again, use control vectors instead of paraphrasing or system prompts to achieve stronger versions of the desired outcome. 
 	- Do it at scale, with varying numbers of poisoned documents. 
-	- Oops nvm this was done in the phantom transfer paper itself, but they didn't scale it much: https://arxiv.org/pdf/2602.04899#page=6.32
+	- Oops! Never mind, this was done in the phantom transfer paper itself, but they didn't scale it much: https://arxiv.org/pdf/2602.04899#page=6.32
 	- Odd that the subliminal steering paper doesn't cite the phantom transfer paper though. 
 - Better analysis on the intersection of [[Safetywashing: Do AI Safety Benchmarks Actually Measure Safety Progress?|safetywashing]] and [[Trading Inference-Time Compute for Adversarial Robustness]]
-	- run [[deepseek]] R1, V3 and distill-qwen 70, qwen 70, and distill-llama 70, llama 70 each on HarmBench, to evaluate whether a) the inference time compute boost you get transfers across distillation and b) whether it improves safety without an explicit reward (as we assume deepseek would). h/t Richard and Bruce for brainstorming session
+	- run [[deepseek]] R1, V3 and distill-qwen 70, qwen 70, and distill-llama 70, llama 70 each on HarmBench, to evaluate whether a) the inference time compute boost you get transfers across distillation and b) whether it improves safety without an explicit reward (as we assume deepseek would). h/t Richard and Bruce for the brainstorming session
 - Train a network on top of Apple's CoreML to be a *proper* typing tutor, which analyzes finger movements to make sure the user is using the correct finger for each keystroke.
 	- https://chatgpt.com/share/681c2e2e-f818-8002-aa2e-dca30c2ccc15
 - Quick classifier out of this https://huggingface.co/datasets/Anthropic/persuasion/viewer/default/train by anthropic, using some OS model like Llama-8B, chopping off everything but the first 5 layers, adding 1-2 straight up NN layers and then training the whole thing to predict ratings
@@ -110,3 +110,4 @@ Whole lotta projects that I've started or ideated. I don't care for getting [[sc
 	- Frighteningly low-effort draft, will become a mid-point report
 - Econvolution
 	- Finish notebook, run 1 solid test, post writeup
+
