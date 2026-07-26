@@ -22,3 +22,9 @@ It seems pretty likely to me that we do not live in a world where the genuinely 
 Part of the reason might be that good ideas are getting harder to find, and the inputs that are necessary, or relatively the inputs that are necessary for each discovery of an equivalent magnitude, are kind of exponentially larger. The gains you get from that discovery are not exponentially larger.
 
 Most of the gains, or the way that the gains have been able to contribute to the next generation, is not so much directly, but rather indirectly via the economy, via diffusion, via revenues of the companies growing massively. Notably, however, the revenues have been increasing exponentially. If the revenues were increasing linearly, you basically wouldn't be able to sustain anything because of this "ideas are getting harder to find" idea or principle of the power law.
+
+## Population 
+
+One heuristic I find compelling as a counterargument to the "bottlenecks view" is the one which says that economic growth rates have been tied to human population for quite some time, and the advent of AI above some capability threshold, likely AGI or similar, results in a spike in the effective population and you should expect a corresponding spike in growth rates. And this sort of spike can be self-perpetuating, as the population of AIs continues to increase alongside the further scientific / AI R&D discoveries. 
+
+The rate of e.g. economic growth while primarily human-driven capped out when the human population plateaued, and you should at minimum expect the AI population to have a much much higher plateau, if it plateaus at all. 

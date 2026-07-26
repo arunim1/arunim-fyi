@@ -8,6 +8,8 @@ public: true
 A number of projects that I've started or thought of at some point or another. I don't care for getting [[scooped]] so if you're interested, please go ahead and do them! Then, do tell me about it so that I can thank you / ask you about how it went.
 
 - AI safety index, which is basically like an inverse of an AI risk index. Could even e.g. use the same benchmarks and data from CAIS's dashboard, but apply the Epoch capabilities index methodology to get more comparable numbers, and potentially pull in other safety benchmarks or risk-related benchmarks from model safety reports. 
+	- Tried this and it wasn't very compelling. The "mean inter-item correlation" was 0.38 vs 0.64 for ECI. 
+	- github.com/arunim1/safety-index 
 - Subliminal learning backdoors
 	- I suspect I won't actually run this, but want to explain the experiment I want to see in some detail. The general question is "how undetectable can data that instills backdoors be?" and "what is the best way to create data that instills backdoors?", where best = undetectable and strong and cross-model.
 	- Seems reasonable to combine a few methods, e.g.: 

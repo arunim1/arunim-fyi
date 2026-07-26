@@ -6,6 +6,36 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>fog-of-war chess</title>
+    <link>https://arunim.fyi/fog-of-war-chess</link>
+    <guid>https://arunim.fyi/fog-of-war-chess</guid>
+    <description>What is Fog of War Chess? Fog-of-war chess is by far, my favorite game in the world. Fog-of-war is a variant of chess (available on chess.com) where you are only able to see the squares your pieces are or where your pieces can move.</description>
+    <pubDate>Sun, 26 Jul 2026 18:40:07 GMT</pubDate>
+  </item><item>
+    <title>advice</title>
+    <link>https://arunim.fyi/advice</link>
+    <guid>https://arunim.fyi/advice</guid>
+    <description>Some advice, I’ll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn’t advice despite being titled advice, and is instead just reminders of obvious facts about the world.</description>
+    <pubDate>Sun, 26 Jul 2026 18:30:07 GMT</pubDate>
+  </item><item>
+    <title>creating instead of consuming</title>
+    <link>https://arunim.fyi/creating-instead-of-consuming</link>
+    <guid>https://arunim.fyi/creating-instead-of-consuming</guid>
+    <description>Relaxing by creating Chris Lakin had this great post back in the day (archived here) about relaxing by creating instead of by consuming. I haven’t read it in a while, but it still lingers on account of both my bad habit of poor quality relaxation and my related media consumption addiction.</description>
+    <pubDate>Sun, 26 Jul 2026 18:30:07 GMT</pubDate>
+  </item><item>
+    <title>RSI</title>
+    <link>https://arunim.fyi/RSI</link>
+    <guid>https://arunim.fyi/RSI</guid>
+    <description>Defining RSI What is RSI?? I think it means that humans exit the loop of AI development. But like … how much? It could be the case that humans are cheaper than automated alternatives for a large variety of physical labor for some time.</description>
+    <pubDate>Fri, 24 Jul 2026 18:30:08 GMT</pubDate>
+  </item><item>
+    <title>projects</title>
+    <link>https://arunim.fyi/projects</link>
+    <guid>https://arunim.fyi/projects</guid>
+    <description>A number of projects that I’ve started or thought of at some point or another. I don’t care for getting scooped so if you’re interested, please go ahead and do them! Then, do tell me about it so that I can thank you / ask you about how it went.</description>
+    <pubDate>Fri, 24 Jul 2026 18:30:08 GMT</pubDate>
+  </item><item>
     <title>Utility Engineering</title>
     <link>https://arunim.fyi/Utility-Engineering</link>
     <guid>https://arunim.fyi/Utility-Engineering</guid>
@@ -24,18 +54,6 @@
     <description>TLDR: The (at the time of writing) nascent field of risk preferences in LLMs is currently evaluating models in a suboptimal way which too-directly analogize LLMs to humans, and result ...</description>
     <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
   </item><item>
-    <title>projects</title>
-    <link>https://arunim.fyi/projects</link>
-    <guid>https://arunim.fyi/projects</guid>
-    <description>A number of projects that I’ve started or thought of at some point or another. I don’t care for getting scooped so if you’re interested, please go ahead and do them! Then, do tell me about it so that I can thank you / ask you about how it went.</description>
-    <pubDate>Thu, 23 Jul 2026 18:30:08 GMT</pubDate>
-  </item><item>
-    <title>advice</title>
-    <link>https://arunim.fyi/advice</link>
-    <guid>https://arunim.fyi/advice</guid>
-    <description>Some advice, I’ll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn’t advice despite being titled advice, and is instead just reminders of obvious facts about the world.</description>
-    <pubDate>Mon, 20 Jul 2026 20:27:11 GMT</pubDate>
-  </item><item>
     <title>Calvin and Hobbes</title>
     <link>https://arunim.fyi/Calvin-and-Hobbes</link>
     <guid>https://arunim.fyi/Calvin-and-Hobbes</guid>
@@ -47,24 +65,6 @@
     <guid>https://arunim.fyi/Deciding-if-something-is-on-the-frontier</guid>
     <description>How do you decide if something is on the frontier? I’m a little bit confused. I’ll often want to do analysis which says: take a set of data points, figure out which of the ones are, on the frontier or that are state-of-the-art at the time they are made available, and then plot a trend line so that you can accurately guess what the frontier will be in the future.</description>
     <pubDate>Mon, 06 Jul 2026 18:30:07 GMT</pubDate>
-  </item><item>
-    <title>stuff</title>
-    <link>https://arunim.fyi/stuff</link>
-    <guid>https://arunim.fyi/stuff</guid>
-    <description>List of stuff I carry around or otherwise use that others might find useful or that I might want to reflect on later in life. Stuff on my person iPhone 12 Wallet: my ~4 most important cards (including my ID) + keys on an attached keychain.</description>
-    <pubDate>Thu, 25 Jun 2026 18:30:04 GMT</pubDate>
-  </item><item>
-    <title>fog-of-war chess</title>
-    <link>https://arunim.fyi/fog-of-war-chess</link>
-    <guid>https://arunim.fyi/fog-of-war-chess</guid>
-    <description>Fog-of-war chess is by far, my favorite game in the world. Fog-of-war is a variant of chess (available on chess.com) where you are only able to see the squares your pieces are or where your pieces can move.</description>
-    <pubDate>Mon, 15 Jun 2026 04:10:16 GMT</pubDate>
-  </item><item>
-    <title>disclaimers</title>
-    <link>https://arunim.fyi/disclaimers</link>
-    <guid>https://arunim.fyi/disclaimers</guid>
-    <description>This is a place for disclaimers, disclosures, credits, and hedges of all sorts. Fairly often I will fall back into the bad habit of being disincentivized from writing or generally broadcasting my thoughts publicly by various concerns that can be mitigated by some kind of kneecapping, disclaimers, or hedges.</description>
-    <pubDate>Mon, 15 Jun 2026 04:07:42 GMT</pubDate>
   </item>
     </channel>
   </rss>

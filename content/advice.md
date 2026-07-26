@@ -3,8 +3,8 @@ public: true
 ---
 Some advice, I'll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn't advice despite being titled advice, and is instead just reminders of obvious facts about the world.
 ### General
-- I think you should spend your time [[creating instead of consuming|creating]] stuff with others. See [this post](https://benbyfax.substack.com/p/aliveness )
-- Cold email. it's not too hard to find most people's emails, or other ways of emailing them. Follow up with them a few days afterwards if they don't respond. 
+- You should spend your time [[creating instead of consuming|creating]] stuff with others. See [this post](https://benbyfax.substack.com/p/aliveness )
+- Cold email. it's not too hard to find most people's emails, or other ways of contacting them. Follow up with them a few days afterwards if they don't respond. 
 - If you primarily want to do good in the world, read [Sophie's post](https://sophieinkhaven.substack.com/cp/193324672).
 - Do things that compound, pick one habit at a time and do it well, then move to the next habit. Some ideas for habits you may want to pick up: Anki, gym, run, call a random friend, reflect, journal, write. 
 - Read with the intent of talking with the author. (stolen from [X](https://xcancel.com/divya_venn)) 
