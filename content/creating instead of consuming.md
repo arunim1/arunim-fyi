@@ -44,6 +44,8 @@ Brainstorming things I can do to create with others:
 - cooking 
 - playing / reasoning about various games. e.g. strategies for (unilateral) [[fog-of-war chess]] 
 
-While brainstorming, I'm noticing this unfortunate difficulty in more "intellectual" or impactful co-creation activities, which feel like they require everyone involved to more-or-less be on the same page on a broad range of things, or be at roughly similar levels of knowledge about the topic. On the other hand,  it seems feasible to, though perhaps a bit difficult, to  
+While brainstorming, I'm noticing this unfortunate difficulty in more "intellectual" or impactful co-creation activities, which feel like they require everyone involved to more-or-less be on the same page on a broad range of things, or be at roughly similar levels of knowledge about the topic. On the other hand,  it seems feasible to, though perhaps a bit difficult, to split work across people, each taking on their comparative advantage or biting off a chunk of a broader project and bringing it together later. 
+
+How can I make the gradient / the default move towards creating with others rather than consuming alone? Starting small, with how to make default activities while with others 75/25 creation/consumption rather than primarily consumption. Trying out a variety of activities to see which ones succeed at encouraging creative activities in the long run. Are there better memes that can be spread to change this culturally / at larger scale? What are these memes, and what would it look like to spread them effectively?
 
 [^1]: Fingers crossed this doesn't include any more binges of visual media other than Tintin
