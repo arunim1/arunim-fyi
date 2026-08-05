@@ -47,3 +47,18 @@ $$\times \frac{67 \times 10^{12}}{1979 \times 10^{12}} \approx \$0.84$$
 Even with somewhat conservative estimates (rental rates, low-ish utilization, no fancy optimizations), providers charging a few dollars per million output tokens could very well be making a profit—not merely covering costs.
 
 And then on top of this you factor in that the labs spend millions hiring top-notch engineers to optimize inference and utilization, surely had found at least *some* of [[deepseek]]'s inference optimizations, also have access to H20s etc.
+
+## China
+Let me walk through some claims: 
+- Anthropic inference margins are ~70%
+- Kimi K3 is open-weights
+- You should expect that competition between inference providers of open-weight models drives margins to near-zero. Let's say ~10%?
+	- maybe this is wrong idk. supposedly fireworks has a 50% margin overall...
+- K3 is served at 3/15 across the board, let's say cost of serving is then actually 2.7/13.5
+	- avg tok/sec 86.22 on https://artificialanalysis.ai/leaderboards/providers 
+	- (kimi at 35, fireworks at 164, obvs bc of which gpus they have, so this changes stuff somewhat.)
+- Fable 5, released a month before K3, is served at 10/50, let's say cost of serving is then actually 3/15
+	- avg tok/sec 70 
+- Fable 5 is well ahead of K3 on ECI. Likely a bigger model. 
+
+I was previously more confident about the claim that frontier AI company inference was much better than e.g. Moonshot / DeepSeek's inference. 
