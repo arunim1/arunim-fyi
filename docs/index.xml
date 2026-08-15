@@ -6,6 +6,12 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>run</title>
+    <link>https://arunim.fyi/run</link>
+    <guid>https://arunim.fyi/run</guid>
+    <description>...</description>
+    <pubDate>Sat, 15 Aug 2026 22:17:00 GMT</pubDate>
+  </item><item>
     <title>attestable</title>
     <link>https://arunim.fyi/attestable</link>
     <guid>https://arunim.fyi/attestable</guid>
@@ -58,12 +64,6 @@
     <link>https://arunim.fyi/ml-notes</link>
     <guid>https://arunim.fyi/ml-notes</guid>
     <description>todo organize these! Training ZeRO stage 1: data parallel all params on all gpus local loss, local gradients construct the global gradient on every by averaging the local gradients ...</description>
-    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
-  </item><item>
-    <title>risk aversion in llms</title>
-    <link>https://arunim.fyi/risk-aversion-in-llms</link>
-    <guid>https://arunim.fyi/risk-aversion-in-llms</guid>
-    <description>TLDR: The (at the time of writing) nascent field of risk preferences in LLMs is currently evaluating models in a suboptimal way which too-directly analogize LLMs to humans, and result ...</description>
     <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
   </item>
     </channel>

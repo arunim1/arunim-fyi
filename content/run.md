@@ -1,0 +1,400 @@
+---
+public: true
+---
+<div class="runpage">
+
+<style>
+.runpage { --run-ink:#ff7a1f; --run-ink-soft:#ff7a1f33; }
+.runpage .hero { margin:1.5rem 0 2.5rem; }
+.runpage .hero-frame {
+  background:var(--light);
+  /* a whisper of the border colour, so the art sits on a panel without the
+     panel becoming the loudest thing on the page */
+  background:color-mix(in srgb, var(--lightgray) 38%, var(--light));
+  border:1px solid var(--lightgray);
+  border-radius:12px; padding:1.75rem 1.25rem; overflow:hidden;
+}
+.runpage .runletters, .runpage .runletters-still {
+  display:block; width:100%; height:auto; border-radius:6px;
+}
+/* the frozen still stands in for the GIF, so exactly one of them is visible */
+.runpage .hero-frame.frozen .runletters,
+.runpage .hero-frame:not(.frozen) .runletters-still { display:none; }
+.runpage .hero-missing {
+  color:var(--gray); font-size:.85rem; text-align:center; padding:2rem 0;
+}
+/* The caption is just the controls now. Counts and the phrase both read as
+   debug output under the art, and the GIF says the sentence itself. */
+.runpage .hero-caption { margin-top:.75rem; }
+.runpage .hero-actions {
+  margin:0; font-size:.82rem; display:flex; gap:1rem; align-items:baseline;
+  justify-content:flex-start;
+}
+.runpage .hero-actions a { color:var(--secondary); }
+/* Pause reads as a link, not a chrome button — the page has one real control
+   (the map toggle) and a second button-looking thing next to it competed with
+   it for attention without deserving to. */
+.runpage button.freeze {
+  font:inherit; font-size:.85rem; color:var(--secondary); background:none;
+  border:0; padding:0; cursor:pointer; text-decoration:underline;
+  text-underline-offset:2px;
+}
+.runpage button.freeze:hover { color:var(--tertiary); }
+
+.runpage .controls {
+  display:flex; gap:.5rem; align-items:center; margin:2.5rem 0 1rem;
+  font-size:.85rem; color:var(--gray); flex-wrap:wrap;
+}
+.runpage .controls button {
+  font:inherit; font-size:.85rem; padding:.3rem .8rem; cursor:pointer;
+  background:none; color:var(--darkgray);
+  border:1px solid var(--lightgray); border-radius:6px;
+}
+.runpage .controls button[aria-pressed=true] {
+  background:var(--secondary); border-color:var(--secondary); color:var(--light);
+}
+
+.runpage .run-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.25rem; margin-top:1rem;
+}
+.runpage .run-card {
+  border:1px solid var(--lightgray); border-radius:10px; overflow:hidden;
+  background:var(--light);
+}
+.runpage .run-map { min-height:150px; display:grid; place-items:center; padding:.75rem; }
+.runpage .run-trace { width:100%; height:auto; max-height:260px; }
+.runpage .run-trace path {
+  fill:none; stroke:var(--run-ink); stroke-width:2.2;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+.runpage .run-trace circle.start { fill:var(--run-ink); opacity:.55; }
+.runpage .run-noroute { color:var(--gray); font-size:.8rem; }
+.runpage .run-facts { padding:.25rem .9rem 1rem; border-top:1px solid var(--lightgray); }
+/* The date is the heading now. Every run is called Morning run, so the title
+   was nine identical lines carrying nothing; the date and the word it drew are
+   the only facts that differ between cards. */
+.runpage .run-when {
+  display:flex; gap:.6rem; align-items:baseline; justify-content:space-between;
+  margin:.6rem 0 .8rem; font-size:.95rem; line-height:1.2;
+}
+.runpage .run-when a { color:var(--darkgray); text-decoration:none; font-weight:600; }
+.runpage .run-when a:hover { color:var(--secondary); }
+/* The word keeps the capitalisation it was actually run in (EntErtAined) is
+   the joke, and an uppercase treatment flattens it to ENTERTAINED. */
+.runpage .run-word {
+  color:var(--run-ink); white-space:nowrap; text-transform:none;
+  letter-spacing:0; font-size:.9rem; font-style:italic;
+}
+.runpage .run-facts dl {
+  display:grid; grid-template-columns:1fr 1fr; gap:.45rem .8rem; margin:0;
+}
+.runpage .run-facts dt { font-size:.7rem; color:var(--gray); margin:0;
+  text-transform:uppercase; letter-spacing:.04em; }
+.runpage .run-facts dd { margin:0; font-size:.9rem; font-variant-numeric:tabular-nums; }
+
+.runpage .attribution { margin-top:2.5rem; font-size:.75rem; color:var(--gray); }
+.runpage .more { margin:1.5rem 0; text-align:center; }
+.runpage .more button {
+  font:inherit; font-size:.85rem; padding:.45rem 1.1rem; cursor:pointer;
+  background:none; color:var(--secondary);
+  border:1px solid var(--lightgray); border-radius:6px;
+}
+.runpage .run-card[hidden] { display:none; }
+</style>
+
+<section class="hero">
+<div class="hero-frame">
+  <img class="runletters" src="/assets/run/letters.gif" width="1400" height="377" alt="The phrase &ldquo;Hi Guys And Girls Are you All not EntErtAined&rdquo; written across a map of the neighbourhood, one word per run, in the order they were run." decoding="async">
+  <canvas class="runletters-still" aria-hidden="true"></canvas>
+</div>
+<figcaption class="hero-caption">
+  <p class="hero-actions"><a href="/assets/run/letters.gif" download>Download GIF</a>
+    <button class="freeze" type="button" aria-pressed="false">Pause</button></p>
+</figcaption>
+</section>
+
+## All runs
+
+<div class="run-grid">
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M287.3,21.8L274.2,23.7L273.6,25.0L274.7,31.5L274.4,33.5L268.9,35.7L262.5,36.4L261.3,35.7L259.2,31.4L256.0,16.8L258.5,27.2L252.0,25.7L247.0,29.9L247.8,39.6L245.6,38.1L242.4,40.8L240.3,41.5L232.8,42.8L227.1,41.9L217.9,43.6L215.9,35.9L217.6,33.8L220.4,32.3L227.3,31.8L228.8,33.0L229.2,34.8L228.1,36.2L221.9,39.1L217.6,43.5L217.2,45.1L210.2,46.4L203.9,46.3L201.1,43.7L199.6,37.5L198.2,36.6L194.2,37.0L186.9,39.7L187.1,48.7L173.3,50.6L171.5,47.9L171.1,43.2L172.0,45.5L172.2,50.6L160.3,52.7L157.2,51.4L155.0,44.0L153.7,34.3L151.2,33.9L142.7,35.0L141.0,35.6L140.7,37.3L143.0,55.3L129.0,57.9L128.0,56.9L127.1,49.3L130.6,46.9L122.9,48.7L125.5,47.2L126.0,46.2L124.3,39.4L127.8,56.7L127.4,58.0L122.6,59.2L113.0,59.9L110.5,47.7L111.2,48.7L112.1,48.4L114.4,46.1L111.4,49.7L111.4,54.1L112.4,58.5L111.5,60.2L106.7,60.3L103.3,62.1L85.9,65.1L84.3,64.5L82.9,59.0L81.3,45.8L82.4,44.6L93.3,43.3L81.5,45.8L82.7,53.7L91.6,52.8L83.6,54.5L83.2,56.0L84.2,64.3L77.2,66.2L68.6,67.5L67.2,65.1L65.3,57.9L64.9,52.1L66.2,55.4L66.1,57.1L60.9,58.6L61.2,57.8L63.8,57.1L71.4,56.6L66.9,57.9L67.8,66.4L67.0,67.6L53.0,70.0L51.9,68.8L50.7,62.0L45.1,61.2L41.3,62.1L38.0,64.0L39.1,71.1L38.2,72.3L10.3,77.0L9.6,76.7L8.9,74.1L5.7,58.2L18.7,55.2L8.1,56.6L6.6,57.2L6.4,58.2L7.8,65.8L20.2,64.0L8.4,67.0L9.9,76.4L14.6,76.4L37.3,72.4L38.0,71.1L37.0,63.7L49.4,60.5L50.6,61.3L52.4,68.3L53.7,69.8L92.9,63.9L107.5,60.9L120.1,60.5L133.2,58.0L137.0,56.1L141.2,55.2L142.0,53.1L141.4,49.0L141.9,46.6L151.0,44.0L154.4,44.0L155.9,52.2L156.6,53.5L157.4,53.5L185.1,48.8L186.4,47.4L186.9,38.9L197.0,37.2L199.2,38.2L202.4,45.6L204.8,46.6L216.5,43.7L233.9,40.6L264.7,37.5L274.7,33.8L275.2,26.6L277.4,24.5L284.3,22.1L290.6,23.6L294.4,21.9"/><circle class="start" cx="287.3" cy="21.8" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19755082079" target="_blank" rel="noopener">
+        <time datetime="2026-08-15">Aug 15, 2026</time></a><span class="run-word">&ldquo;EntErtAined&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>6.94 mi</dd></div><div><dt>Pace</dt><dd>10:27/mi</dd></div><div><dt>Time</dt><dd>1:12:36</dd></div><div><dt>Avg HR</dt><dd>158 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M289.3,24.6L281.4,19.4L267.8,20.9L258.3,23.3L256.7,19.6L254.9,18.5L235.5,20.5L211.1,24.4L203.6,26.7L205.0,44.6L203.8,47.0L199.9,49.1L168.2,56.0L149.7,57.5L124.0,63.4L121.4,63.1L119.7,61.4L116.3,49.8L116.3,47.6L117.7,45.3L122.9,43.3L119.9,43.3L107.4,46.8L112.0,45.9L113.4,45.3L114.4,43.5L114.1,36.9L112.5,29.3L111.5,27.6L118.2,59.9L117.1,63.4L114.2,65.5L91.6,69.4L89.7,67.4L90.2,62.7L86.7,53.4L83.9,51.3L80.4,50.9L72.0,52.2L62.8,56.7L61.6,59.3L61.6,62.5L64.4,71.1L61.1,72.0L57.7,74.6L55.0,75.4L49.7,76.3L37.3,76.3L33.7,71.8L31.3,62.1L30.7,60.3L28.9,59.5L23.8,59.5L8.3,62.3L6.0,64.4L5.8,67.4L8.0,74.1L8.5,78.2L7.0,64.9L8.7,61.8L21.3,58.6L28.1,58.6L30.1,60.1L33.9,75.4L38.0,77.8L41.2,78.2L57.0,75.6L64.0,71.3L67.6,70.7L87.0,68.1L95.7,69.6L119.0,64.2L132.8,62.9L141.8,60.6L162.1,59.0L169.2,56.5L176.6,56.5L189.5,53.0L197.5,51.9L200.7,48.9L206.5,50.2L211.1,50.2L223.4,47.2L227.3,47.2L228.3,45.3L228.3,41.4L225.3,24.6L226.3,23.3L229.8,21.8L247.7,18.5L259.0,19.4L277.2,15.5L285.7,22.0L288.8,22.4L294.4,15.5"/><circle class="start" cx="289.3" cy="24.6" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19740244446" target="_blank" rel="noopener">
+        <time datetime="2026-08-14">Aug 14, 2026</time></a><span class="run-word">&ldquo;not&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.71 mi</dd></div><div><dt>Pace</dt><dd>10:33/mi</dd></div><div><dt>Time</dt><dd>28:36</dd></div><div><dt>Avg HR</dt><dd>160 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,24.3L290.3,22.9L286.5,24.0L270.7,25.0L269.6,24.6L268.8,23.0L267.7,14.2L265.1,13.5L256.7,15.3L249.5,17.3L248.8,18.2L248.6,21.0L249.4,24.9L248.8,26.6L231.2,29.9L229.6,33.6L210.0,36.7L210.9,46.8L210.2,48.7L193.9,52.1L192.6,53.6L192.3,58.6L191.1,53.3L188.7,52.4L180.8,55.3L171.9,57.1L153.6,59.2L147.4,61.1L139.6,61.6L131.5,63.7L121.8,64.5L107.4,67.6L100.4,67.6L90.9,70.6L77.0,72.4L46.4,74.9L29.8,80.1L27.1,79.3L25.6,75.9L23.6,55.8L22.5,52.1L19.6,51.6L8.4,53.6L6.5,54.6L5.6,56.1L9.4,80.2L7.6,69.8L8.7,68.6L23.9,66.4L24.8,67.2L27.5,76.9L30.8,77.4L47.9,75.2L58.9,72.0L68.0,67.0L70.2,64.5L70.0,61.6L67.8,56.7L67.0,52.2L64.7,47.1L63.0,45.6L62.5,47.3L65.2,53.0L67.6,61.6L72.6,69.6L76.6,68.7L84.2,65.1L87.2,62.5L87.3,57.1L83.7,44.5L82.3,42.0L81.5,43.5L90.5,67.2L92.2,68.6L96.3,67.9L101.1,69.0L107.9,67.2L112.2,67.2L133.0,63.4L143.1,60.3L158.8,57.7L170.0,56.9L183.5,54.3L200.5,52.5L224.4,48.7L226.9,47.7L231.1,43.5L229.9,33.9L230.5,29.1L245.4,26.1L256.9,24.9L262.4,23.3L272.0,24.4L281.8,21.8L290.6,23.8L294.4,21.9"/><circle class="start" cx="294.4" cy="24.3" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19712121239" target="_blank" rel="noopener">
+        <time datetime="2026-08-12">Aug 12, 2026</time></a><span class="run-word">&ldquo;All&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>3.67 mi</dd></div><div><dt>Pace</dt><dd>10:13/mi</dd></div><div><dt>Time</dt><dd>37:30</dd></div><div><dt>Avg HR</dt><dd>172 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 107" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M282.0,34.4L278.9,32.0L275.6,27.4L270.8,23.0L270.3,20.2L266.0,10.4L264.2,8.4L256.5,8.8L248.2,7.7L231.6,9.9L214.9,13.9L210.1,13.4L207.9,14.5L207.0,16.5L207.3,22.6L208.5,26.9L207.7,28.9L200.8,31.1L183.0,34.1L176.1,36.5L160.1,38.9L158.2,40.0L158.4,48.5L156.8,52.9L156.6,59.0L155.8,60.3L136.3,64.5L133.4,64.5L132.2,63.4L127.2,49.9L130.6,64.3L129.2,68.4L128.5,68.6L119.2,70.4L112.5,69.9L105.4,71.5L101.5,68.2L98.9,57.1L97.3,54.2L79.4,55.5L73.5,56.8L72.0,58.4L72.1,64.5L75.2,71.9L72.5,76.9L63.5,79.1L47.3,80.4L44.6,79.3L44.0,78.2L40.9,62.1L45.6,89.1L46.5,97.6L45.6,99.6L30.9,100.9L39.6,100.7L44.6,99.4L45.2,97.2L44.9,86.9L44.2,84.1L43.2,83.0L39.4,81.3L26.8,82.1L20.9,82.1L19.6,81.5L18.5,76.3L19.6,69.9L19.2,67.1L18.0,73.6L18.7,81.5L20.4,83.0L40.9,80.6L48.0,81.9L50.9,81.5L67.1,78.7L70.6,77.6L74.4,74.9L83.9,73.0L96.1,70.6L103.4,71.7L109.0,71.2L128.4,67.7L132.3,64.3L153.2,61.0L155.1,59.7L156.8,53.1L156.5,44.4L157.3,43.1L172.0,41.6L182.8,39.2L187.0,35.9L187.7,33.1L207.9,28.7L212.5,18.9L216.3,16.0L221.8,14.1L237.5,12.1L243.9,8.8L263.2,6.4L264.9,8.0L269.6,21.7L273.9,23.0L276.7,25.2"/><circle class="start" cx="282.0" cy="34.4" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19697272125" target="_blank" rel="noopener">
+        <time datetime="2026-08-11">Aug 11, 2026</time></a><span class="run-word">&ldquo;you&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.59 mi</dd></div><div><dt>Pace</dt><dd>11:10/mi</dd></div><div><dt>Time</dt><dd>28:54</dd></div><div><dt>Avg HR</dt><dd>154 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 129" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M270.8,32.2L265.0,29.0L259.9,29.0L253.5,27.0L231.7,29.3L227.1,29.0L225.8,28.0L224.3,24.1L222.5,10.0L220.5,8.1L219.0,7.7L210.3,9.7L204.8,10.0L199.4,12.2L185.2,15.8L183.4,17.1L183.9,29.9L182.7,31.5L173.8,34.1L153.9,38.0L146.1,40.2L144.8,41.5L149.9,64.6L150.1,69.8L148.1,72.0L143.0,74.6L132.1,76.5L124.7,78.8L107.4,80.4L102.9,78.1L99.1,80.7L91.9,82.6L76.2,83.9L67.8,89.4L57.1,89.7L21.6,96.5L19.0,97.8L18.0,99.7L18.8,111.6L20.0,119.0L22.1,120.9L24.1,121.2L26.9,119.9L27.9,118.0L26.6,101.6L28.4,95.5L51.5,92.0L55.1,90.7L56.6,88.4L56.9,83.9L55.4,73.0L58.1,69.8L58.4,68.5L56.6,62.1L56.6,58.9L57.9,55.3L62.2,54.0L87.4,50.8L105.7,47.6L129.8,42.1L132.6,40.5L143.0,37.6L159.8,35.4L178.6,30.6L197.9,29.6L205.0,28.3L212.4,25.7L217.5,27.3L229.7,27.3L265.2,20.9L269.3,21.9L275.4,26.4L277.4,26.4L282.0,23.5"/><circle class="start" cx="270.8" cy="32.2" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19718309458" target="_blank" rel="noopener">
+        <time datetime="2026-08-10">Aug 10, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>1.48 mi</dd></div><div><dt>Pace</dt><dd>13:34/mi</dd></div><div><dt>Time</dt><dd>20:05</dd></div><div><dt>Avg HR</dt><dd>156 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,18.9L288.1,15.5L275.4,15.2L250.8,18.7L243.2,21.2L228.3,23.6L227.3,24.9L227.3,26.8L229.3,41.2L228.5,45.9L211.9,51.6L205.0,52.6L201.1,47.6L187.8,53.3L175.9,57.0L166.1,55.3L145.0,58.3L142.3,58.3L140.5,57.0L139.7,51.3L140.7,48.9L145.2,46.9L160.3,43.4L163.6,41.7L163.6,37.5L161.4,34.0L155.0,34.5L140.3,38.2L138.6,39.7L136.8,61.2L133.3,64.2L113.3,66.2L101.0,68.9L91.8,69.1L75.8,72.6L72.1,71.9L69.9,67.9L63.1,44.9L62.1,35.3L61.3,33.3L60.0,32.3L56.8,31.0L31.0,32.0L26.0,33.5L8.9,35.7L6.6,36.5L5.6,38.2L8.0,57.3L8.0,62.7L6.0,72.4L6.4,78.5L6.2,72.4L7.8,67.9L7.8,61.2L9.1,59.2L10.9,58.5L29.5,55.0L42.2,54.0L47.7,52.1L65.3,49.6L66.8,53.8L67.2,63.9L69.0,67.2L77.0,67.2L81.5,65.9L96.9,63.9L100.8,61.7L99.1,51.3L100.2,44.6L101.8,43.2L112.0,41.4L108.8,41.4L101.8,43.2L100.4,45.1L99.3,49.8L98.9,55.3L100.8,63.7L102.0,65.7L104.4,66.4L120.8,64.2L134.1,61.2L139.1,61.5L157.7,58.5L182.7,53.6L194.7,52.8L197.2,49.1L199.2,48.4L218.9,48.6L226.0,47.6L228.9,45.9L229.9,44.2L227.9,33.0L227.9,30.1L229.1,27.3L232.0,25.1L235.3,23.9L247.8,21.4"/><circle class="start" cx="294.4" cy="18.9" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19718309338" target="_blank" rel="noopener">
+        <time datetime="2026-08-06">Aug 6, 2026</time></a><span class="run-word">&ldquo;Are&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.35 mi</dd></div><div><dt>Pace</dt><dd>10:59/mi</dd></div><div><dt>Time</dt><dd>25:52</dd></div><div><dt>Avg HR</dt><dd>155 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,19.4L291.6,17.5L290.4,15.4L287.7,18.5L282.3,18.9L272.8,21.2L261.8,20.7L254.0,21.5L226.5,26.7L221.7,28.7L207.9,30.5L205.7,33.7L206.0,40.1L204.5,47.0L199.1,48.5L197.0,50.3L193.0,51.8L171.4,54.6L145.7,60.1L119.5,63.2L75.0,70.4L48.2,75.5L32.8,76.9L29.7,75.0L23.8,75.9L16.1,78.4L13.9,78.2L11.5,74.4L11.0,64.1L8.4,50.6L10.4,49.3L25.2,45.1L15.0,48.3L6.9,49.3L5.9,50.4L6.2,55.6L11.4,73.9L12.7,75.2L14.8,75.7L27.6,75.0L32.9,71.7L31.2,67.6L28.6,66.4L23.0,67.9L22.3,68.7L29.4,62.7L30.5,62.7L31.2,63.2L34.0,74.4L35.1,75.2L42.4,75.9L48.3,71.6L53.4,70.6L50.4,59.9L50.9,58.3L54.2,69.2L56.6,72.2L67.0,71.1L74.1,69.1L75.6,58.4L76.4,56.8L81.2,53.9L78.7,53.4L76.3,54.1L73.8,57.8L74.2,67.4L75.0,69.4L76.8,70.1L83.8,69.4L96.4,64.7L98.0,60.4L98.0,53.8L96.1,36.3L98.8,50.6L98.5,57.8L99.8,64.6L101.9,66.1L106.1,66.1L116.6,64.4L122.7,61.4L136.1,58.4L138.2,57.3L138.6,54.8L137.4,52.4L133.3,52.4L122.7,54.4L120.0,53.6L119.0,51.6L119.0,49.0L119.9,48.0L122.7,46.8L133.8,45.0L136.2,43.5L121.8,46.5L119.9,48.1L121.1,51.8L124.3,52.3L137.4,49.6L139.0,54.9L144.0,57.3L158.1,54.4L163.0,54.6L186.8,50.8L204.8,47.0L206.6,45.1L204.3,34.2L204.4,32.0L205.8,30.8L219.6,28.7L241.0,23.0L258.1,20.7L262.5,19.2L272.8,20.0L291.4,17.5"/><circle class="start" cx="294.4" cy="19.4" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19613964363" target="_blank" rel="noopener">
+        <time datetime="2026-08-05">Aug 5, 2026</time></a><span class="run-word">&ldquo;Girls&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>4.03 mi</dd></div><div><dt>Pace</dt><dd>9:15/mi</dd></div><div><dt>Time</dt><dd>37:16</dd></div><div><dt>Avg HR</dt><dd>173 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M285.3,41.3L278.9,39.1L258.0,41.0L254.4,40.1L250.3,18.2L247.9,15.5L244.3,15.8L233.0,19.4L227.3,20.3L224.7,21.5L221.5,27.7L216.8,32.5L216.0,34.6L216.8,40.3L215.6,42.0L210.6,43.9L198.3,44.8L194.9,46.3L194.4,52.7L196.1,70.1L194.7,73.2L166.7,78.2L164.6,77.5L163.5,73.9L159.3,55.1L157.6,39.6L156.5,37.2L155.0,36.5L123.5,38.9L97.7,45.3L91.1,44.1L72.1,46.5L66.7,48.2L63.3,51.5L61.2,52.0L40.5,53.4L36.0,54.9L6.2,60.1L5.6,61.1L6.0,66.8L7.5,76.5L43.3,72.5L57.0,69.6L70.0,68.4L76.4,66.5L89.8,65.8L97.5,63.2L108.7,61.1L120.5,61.1L126.7,58.9L152.0,55.6L164.2,57.0L182.3,53.2L184.4,51.5L185.3,48.2L187.8,46.5L202.8,44.4L215.1,41.3L216.2,39.8L216.4,37.7L213.8,27.0L214.7,23.9L225.8,20.1L239.8,17.4L242.4,17.9L249.0,23.9L257.1,37.7L268.8,35.8L276.1,35.6L281.6,36.3L289.1,39.8L294.4,34.6"/><circle class="start" cx="285.3" cy="41.3" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19584146247" target="_blank" rel="noopener">
+        <time datetime="2026-08-03">Aug 3, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.01 mi</dd></div><div><dt>Pace</dt><dd>10:22/mi</dd></div><div><dt>Time</dt><dd>20:53</dd></div><div><dt>Avg HR</dt><dd>151 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,45.6L286.4,37.6L283.0,37.4L265.6,42.1L255.6,42.3L248.0,41.4L242.8,42.3L236.6,42.3L227.0,43.7L222.1,45.6L214.2,45.6L199.1,48.6L187.6,49.3L186.7,48.9L183.7,36.9L182.4,35.0L175.3,30.8L170.5,30.3L160.5,32.4L159.2,33.8L159.7,42.5L162.5,54.0L161.6,56.2L135.2,61.1L132.1,59.9L131.3,61.6L129.5,62.0L128.0,60.6L125.8,47.5L124.1,45.3L116.3,45.6L102.6,47.7L100.7,48.4L100.1,49.6L100.9,62.7L99.8,64.8L89.0,68.4L70.2,71.7L67.5,70.7L65.8,57.6L63.7,54.7L54.1,55.0L45.0,56.9L34.2,57.8L25.7,60.4L13.4,62.0L10.6,63.4L10.5,70.3L12.3,80.8L5.8,45.6L5.8,41.4L9.2,37.8L12.7,36.0L35.3,31.5L58.5,28.0L60.4,29.1L61.9,31.7L65.0,53.1L68.8,67.0L69.9,69.8L71.5,70.7L85.5,68.8L99.4,65.8L100.1,65.1L100.1,62.5L98.5,48.9L99.8,47.2L101.4,46.8L120.6,43.9L124.8,43.9L126.1,44.9L128.4,57.3L130.6,61.3L163.3,56.2L172.4,53.8L183.1,52.4L185.6,50.5L182.2,27.3L180.4,21.4L180.0,14.3L179.1,12.9L186.5,49.1L193.0,49.6L213.0,45.1L232.7,43.2L240.2,42.1L245.7,40.2L256.5,41.1L279.9,36.7L283.8,36.9L286.4,39.0L289.4,39.7L293.4,37.6"/><circle class="start" cx="294.4" cy="45.6" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19584146165" target="_blank" rel="noopener">
+        <time datetime="2026-07-31">Jul 31, 2026</time></a><span class="run-word">&ldquo;And&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.63 mi</dd></div><div><dt>Pace</dt><dd>10:03/mi</dd></div><div><dt>Time</dt><dd>26:24</dd></div><div><dt>Avg HR</dt><dd>167 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M266.2,23.1L263.6,10.6L263.1,9.1L261.9,8.4L255.1,11.0L232.0,14.3L230.6,15.0L230.3,16.1L231.8,24.7L231.3,26.2L227.7,27.5L210.3,30.6L209.6,31.0L209.9,34.3L208.0,36.3L196.4,37.6L186.8,39.8L176.6,40.7L155.2,45.1L154.2,46.4L155.7,54.1L155.9,59.4L154.7,60.9L130.0,67.3L113.7,69.1L102.7,71.9L84.2,73.9L66.6,77.6L55.1,78.5L34.6,82.7L23.9,83.6L14.5,85.3L8.6,84.7L7.9,84.0L5.8,71.1L14.7,68.2L56.2,58.7L99.6,52.6L105.2,51.1L130.7,47.1L143.4,43.8L145.8,42.5L194.1,35.2L201.9,31.9L215.8,30.6L229.4,26.4L236.9,25.8L245.4,23.6L252.7,23.1L256.3,22.0L266.1,23.4L286.4,19.6L294.4,19.0"/><circle class="start" cx="266.2" cy="23.1" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19584146150" target="_blank" rel="noopener">
+        <time datetime="2026-07-30">Jul 30, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>1.91 mi</dd></div><div><dt>Pace</dt><dd>10:52/mi</dd></div><div><dt>Time</dt><dd>20:50</dd></div><div><dt>Avg HR</dt><dd>153 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,18.5L272.5,20.0L260.9,19.5L233.9,23.6L216.9,28.3L202.0,29.9L192.3,32.6L184.8,33.6L182.4,36.0L178.2,36.4L179.5,37.0L180.7,40.0L182.0,48.4L181.4,50.9L165.9,54.1L159.9,54.6L143.5,58.9L129.9,59.7L99.5,65.0L96.6,63.2L77.5,63.5L72.9,56.2L74.1,66.3L55.7,66.8L54.4,65.6L52.6,56.1L54.6,70.9L28.1,73.6L15.4,77.6L13.7,76.9L12.2,59.7L10.3,49.4L11.9,48.0L21.4,46.0L26.9,43.7L6.8,47.1L5.8,48.3L5.8,51.9L11.0,74.2L12.6,75.1L15.8,74.9L31.8,72.8L31.6,66.5L30.6,63.5L29.7,63.3L23.9,66.3L23.0,66.0L28.8,60.5L29.7,60.8L31.4,63.8L31.5,68.0L33.5,74.6L38.2,75.7L49.9,72.1L56.7,71.8L68.1,68.1L81.6,66.6L93.5,63.5L95.7,57.7L95.6,48.9L97.4,59.5L98.7,62.0L102.1,62.0L111.9,58.9L113.7,57.9L114.5,56.4L114.8,52.3L113.7,46.1L116.9,59.2L118.4,74.1L116.9,75.6L107.8,76.6L115.4,75.4L118.0,74.1L117.9,63.0L119.1,60.0L134.5,57.2L156.1,51.8L156.1,49.8L154.6,47.1L146.4,48.8L141.4,48.8L139.7,48.0L139.1,44.0L140.0,42.7L156.7,39.2L140.4,42.5L139.3,43.7L140.0,46.6L142.7,48.0L158.0,45.6L159.9,52.1L163.5,53.6L179.9,50.1L180.9,49.1L187.1,34.1L192.0,33.9L201.4,30.4L219.6,28.4L221.8,24.1L245.2,21.3L261.2,17.9L268.5,19.0L284.4,16.2L287.1,17.4L291.5,21.7L293.7,18.5"/><circle class="start" cx="294.4" cy="18.5" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19516722732" target="_blank" rel="noopener">
+        <time datetime="2026-07-29">Jul 29, 2026</time></a><span class="run-word">&ldquo;Guys&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>4.17 mi</dd></div><div><dt>Pace</dt><dd>9:10/mi</dd></div><div><dt>Time</dt><dd>38:12</dd></div><div><dt>Avg HR</dt><dd>180 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M288.0,16.2L272.5,19.3L256.3,19.7L229.5,23.4L213.0,27.4L196.8,29.6L184.1,33.9L172.3,35.7L171.0,36.3L170.7,37.9L173.0,54.3L158.5,56.0L133.8,61.0L116.9,62.8L94.7,66.7L89.3,68.4L68.8,70.4L54.5,73.5L50.8,71.3L41.4,73.7L32.6,74.3L5.6,78.9L6.4,78.1L20.4,76.5L32.5,73.7L38.3,73.4L98.2,63.4L101.4,63.8L114.3,60.1L130.2,57.9L138.3,55.5L168.4,52.3L170.1,50.8L168.7,36.3L170.7,34.1L204.3,28.5L211.5,26.5L215.0,23.9L226.3,23.5L237.2,21.0L252.8,19.5L258.6,17.6L268.6,18.4L287.2,15.0L294.4,15.4"/><circle class="start" cx="288.0" cy="16.2" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19501719441" target="_blank" rel="noopener">
+        <time datetime="2026-07-28">Jul 28, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.34 mi</dd></div><div><dt>Pace</dt><dd>9:55/mi</dd></div><div><dt>Time</dt><dd>23:13</dd></div><div><dt>Avg HR</dt><dd>162 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 275 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M167.9,39.0L176.1,44.7L178.8,47.3L179.1,48.8L178.8,50.7L175.4,54.7L163.7,65.7L177.3,128.2L176.4,131.9L179.4,134.0L180.4,135.6L181.1,140.1L199.0,155.7L210.7,162.2L212.5,161.4L222.2,148.8L223.6,147.9L225.3,148.6L228.3,148.4L239.2,155.7L252.2,166.2L258.6,172.5L254.7,183.3L247.6,197.0L242.0,210.2L239.5,213.9L230.8,234.7L226.2,242.5L222.2,251.8L217.2,258.8L210.0,275.7L208.2,277.0L193.2,276.8L170.5,277.9L157.1,277.5L150.9,278.1L146.9,280.0L137.8,281.8L106.6,282.0L103.0,280.1L101.4,273.8L101.1,266.2L103.3,261.2L108.5,255.1L108.5,252.3L107.0,250.3L100.1,251.0L92.8,249.7L86.1,249.7L73.4,255.7L64.1,256.4L59.5,254.7L59.4,252.7L60.6,249.7L59.8,247.7L53.5,243.2L48.8,241.9L48.8,230.1L49.5,227.6L46.7,226.0L43.9,220.2L40.8,217.4L35.8,214.1L34.3,213.5L32.4,214.1L27.3,211.7L22.4,206.7L17.5,203.7L16.5,200.6L17.7,197.2L43.3,149.5L49.4,139.9L54.2,128.9L66.8,108.2L73.2,93.5L79.0,90.2L88.1,76.6L99.5,62.0L111.0,50.1L113.9,49.2L113.8,46.9L127.9,32.3L139.1,18.9L142.2,18.0L146.0,19.5L153.7,26.0"/><circle class="start" cx="167.9" cy="39.0" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19461084190" target="_blank" rel="noopener">
+        <time datetime="2026-07-25">Jul 25, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>3.31 mi</dd></div><div><dt>Pace</dt><dd>10:38/mi</dd></div><div><dt>Time</dt><dd>35:13</dd></div><div><dt>Avg HR</dt><dd>166 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,38.1L291.0,40.0L283.7,39.0L279.7,40.2L270.2,40.2L264.5,42.6L262.5,42.6L259.7,36.7L257.0,36.2L243.3,40.2L210.7,45.2L198.9,47.6L190.2,50.9L167.9,54.2L166.2,52.8L162.9,40.2L161.2,31.4L159.7,16.3L158.2,15.1L142.2,16.3L137.0,17.9L120.1,20.3L112.8,22.4L67.4,28.6L65.5,31.2L67.9,45.5L67.0,47.8L43.3,51.9L36.2,55.2L28.9,54.2L25.0,55.7L11.1,56.6L5.8,58.3L5.8,61.8L7.9,69.9L8.1,76.5L9.2,78.4L24.2,76.1L46.7,73.9L62.3,70.9L75.0,69.4L100.0,64.4L106.9,64.2L116.5,62.1L128.9,61.4L135.6,56.6L148.6,57.1L166.4,54.7L190.4,48.8L194.6,46.2L201.1,45.7L203.4,46.4L221.4,43.3L225.9,41.2L239.8,40.5L247.3,38.6L260.4,39.3L283.7,34.8"/><circle class="start" cx="294.4" cy="38.1" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19434341758" target="_blank" rel="noopener">
+        <time datetime="2026-07-23">Jul 23, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>1.87 mi</dd></div><div><dt>Pace</dt><dd>10:21/mi</dd></div><div><dt>Time</dt><dd>19:22</dd></div><div><dt>Avg HR</dt><dd>152 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,25.5L279.9,25.5L268.9,27.6L251.8,27.1L231.5,30.4L227.1,30.4L216.5,32.1L211.5,34.4L200.1,36.5L195.5,38.2L192.9,40.1L174.3,43.1L172.6,42.2L171.5,40.3L169.4,29.9L166.8,23.4L163.1,22.2L148.6,23.4L139.5,25.5L135.2,29.0L102.1,34.4L86.1,38.2L71.8,39.6L53.2,43.3L19.9,47.8L18.8,49.5L20.5,63.6L14.4,66.2L7.5,67.6L5.6,69.0L6.0,70.4L8.0,71.6L15.1,70.9L45.6,65.0L80.0,60.0L90.2,57.5L122.4,53.2L132.8,51.1L138.8,47.3L162.6,42.2L167.8,41.9L171.7,43.8L174.4,44.1L199.0,41.0L202.5,39.8L206.2,35.8L213.7,33.0L224.7,30.4L247.9,27.4L251.4,25.7L260.2,25.9L264.1,26.9L273.0,24.5L276.5,24.5L293.4,28.1"/><circle class="start" cx="294.4" cy="25.5" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19271289515" target="_blank" rel="noopener">
+        <time datetime="2026-07-11">Jul 11, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>1.88 mi</dd></div><div><dt>Pace</dt><dd>10:09/mi</dd></div><div><dt>Time</dt><dd>19:04</dd></div><div><dt>Avg HR</dt><dd>153 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card is-word">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,20.5L291.1,19.7L276.4,22.4L268.7,21.5L264.2,22.8L256.2,23.4L253.8,25.3L245.6,24.7L238.0,26.2L233.0,28.2L229.3,27.4L225.6,27.7L222.6,31.1L222.6,34.7L221.3,37.9L221.6,42.7L213.5,44.5L206.2,45.0L206.0,47.3L195.8,48.4L189.2,50.3L179.6,51.1L168.3,53.9L136.1,58.1L87.6,66.2L81.7,66.5L65.8,70.5L45.9,72.3L44.6,70.1L43.4,62.1L44.7,70.5L30.2,73.2L29.0,70.7L26.6,55.9L25.2,51.4L24.4,52.0L25.6,58.3L24.9,61.0L12.7,63.9L10.9,63.6L9.9,62.5L8.1,54.7L6.8,53.9L5.6,55.5L5.9,59.5L7.7,70.8L9.2,74.2L10.7,74.2L11.2,72.6L11.0,65.0L13.3,63.9L24.9,63.5L27.9,74.3L29.7,75.3L67.6,68.6L77.9,67.8L83.9,65.1L106.3,62.4L129.3,56.4L152.5,54.0L195.3,47.1L203.7,44.8L203.5,33.9L205.8,32.3L223.6,29.0L227.9,27.2L235.6,27.2L252.8,22.9L260.5,22.4L268.4,20.2L277.9,20.5L283.9,18.9L288.9,18.5"/><circle class="start" cx="294.4" cy="20.5" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19229985524" target="_blank" rel="noopener">
+        <time datetime="2026-07-08">Jul 8, 2026</time></a><span class="run-word">&ldquo;Hi&rdquo;</span></p>
+    <dl>
+      <div><dt>Distance</dt><dd>3.70 mi</dd></div><div><dt>Pace</dt><dd>9:04/mi</dd></div><div><dt>Time</dt><dd>33:36</dd></div><div><dt>Avg HR</dt><dd>180 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+<article class="run-card">
+  <div class="run-map">
+    <svg class="run-trace" viewBox="0 0 300 94" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M294.4,33.8L293.6,35.1L291.8,35.9L285.1,28.5L280.9,26.4L258.6,29.4L250.9,28.7L241.6,29.4L228.9,32.7L207.5,35.7L200.9,38.9L191.7,38.3L184.8,41.4L159.5,45.4L148.0,48.2L135.2,49.2L108.3,53.3L89.4,57.1L48.2,63.0L29.0,67.2L24.4,67.0L12.8,68.9L9.5,68.1L8.8,67.0L8.3,61.1L5.6,57.3L6.2,56.0L25.9,52.2L33.8,49.3L54.0,45.4L56.4,46.1L58.2,49.2L60.3,50.7L61.8,57.9L62.6,59.4L63.8,59.8L72.2,58.3L81.9,57.7L115.6,51.4L119.8,51.4L129.4,49.3L152.8,46.5L176.0,42.3L178.7,42.3L182.6,44.0L185.1,41.2L195.6,37.2L201.8,35.5L215.6,34.2L224.7,31.7L232.8,31.3L249.6,28.3L260.5,28.7L281.9,24.9L286.7,25.8"/><circle class="start" cx="294.4" cy="33.8" r="4"/></svg>
+  </div>
+  <div class="run-facts">
+    <p class="run-when">
+      <a href="https://www.strava.com/activities/19216407122" target="_blank" rel="noopener">
+        <time datetime="2026-07-07">Jul 7, 2026</time></a></p>
+    <dl>
+      <div><dt>Distance</dt><dd>2.14 mi</dd></div><div><dt>Pace</dt><dd>11:12/mi</dd></div><div><dt>Time</dt><dd>23:56</dd></div><div><dt>Avg HR</dt><dd>156 bpm</dd></div>
+    </dl>
+  </div>
+</article>
+</div>
+
+
+
+<p class="attribution">Route data from
+<a href="https://www.strava.com" target="_blank" rel="noopener">Strava</a>.</p>
+
+</div>
+
+<script>
+(function () {
+  // Quartz navigates client-side and does not re-run inline scripts on an SPA
+  // transition, so binding once at parse time leaves every control dead unless
+  // you happen to hard-load the page. Quartz emits `nav` on each navigation —
+  // bind there, and guard so a hard load followed by `nav` doesn't double-bind.
+  function setup() {
+    const page = document.querySelector('.runpage');
+    if (!page || page.dataset.wired === 'yes') return;
+    page.dataset.wired = 'yes';
+
+    // --- freeze the hero GIF -------------------------------------------
+    // A GIF has no pause API. Painting the <img> to a canvas captures whatever
+    // frame is on screen right now; swapping to that canvas is the pause, and
+    // swapping back resumes wherever the GIF has since got to.
+    const freeze = page.querySelector('.freeze');
+    const frame = page.querySelector('.hero-frame');
+    const gif = page.querySelector('.runletters');
+    const still = page.querySelector('.runletters-still');
+    if ([freeze, frame, gif, still].every(Boolean)) {
+      freeze.addEventListener('click', () => {
+        const frozen = frame.classList.contains('frozen');
+        if (!frozen) {
+          still.width = gif.naturalWidth || gif.clientWidth;
+          still.height = gif.naturalHeight || gif.clientHeight;
+          still.getContext('2d').drawImage(gif, 0, 0, still.width, still.height);
+        }
+        frame.classList.toggle('frozen');
+        freeze.textContent = frozen ? 'Pause' : 'Play';
+        freeze.setAttribute('aria-pressed', String(!frozen));
+      });
+    }
+
+    // --- progressive disclosure of the log ------------------------------
+    const more = page.querySelector('.more button');
+    if (more) {
+      more.addEventListener('click', () => {
+        const rest = page.querySelectorAll('.run-card[hidden]');
+        Array.prototype.slice.call(rest, 0, 24).forEach((card) => {
+          card.removeAttribute('hidden');
+        });
+        if (!page.querySelector('.run-card[hidden]')) more.parentElement.remove();
+      });
+    }
+  }
+
+  document.addEventListener('nav', setup);
+  if (document.readyState !== 'loading') setup();
+  else document.addEventListener('DOMContentLoaded', setup);
+})();
+</script>
