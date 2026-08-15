@@ -15,7 +15,8 @@ The way that they frame it, at least for AI safety, is as a model-weight securit
 
 Separately, they brought up two other threat models that are interesting to think about, and are much stronger in my opinion. One is that the code you're running is compromised — PyTorch is compromised. The second is that the attacker has root access to the hardware, or the data center, or the GPUs in the data center.
 
-## Red-teaming
+## Model weight security
+### Red-teaming
 
 What would I do if I was the attacker in these scenarios? I would just read off the weights, transcribe them to text, tell the model to repeat back to me these weights, sign it, exfiltrate it, convert it back to numbers. No problem. Or you can get more inventive with the vocabulary — if you're encoding things in hexadecimal, this shrinks the number of tokens you need, maybe with a slightly higher error rate. It's on the order of less than a percent of a day's worth of data center output, and adversaries are more than capable of waiting that long.
 
@@ -29,7 +30,7 @@ The other thing was that there are claims on Twitter, at least from Yonadav Shav
 
 ## What can the verifier see?
 
-Who's the verifier in this case? China, in the business of national security? Does China have access to everything? My initial guess is that they have access to everything. They have to share artifacts, which isn't that bad. It's fine. A follow-up question is how detailed that has to be — how much of the architecture, how much of the infrastructure.
+Who's the verifier in the case we care most about? China, I think. Does China have access to everything? My initial guess is that they have access to everything. They have to share artifacts, which isn't that bad. It's fine. A follow-up question is how detailed that has to be — how much of the architecture, how much of the infrastructure.
 
 The biggest question from my take is: what is the relationship between inputs to the verifier and things the opposing party in a bilateral agreement is able to see? My current understanding is that they are the same. In that case it seems very relevant and important.
 
@@ -46,6 +47,8 @@ Inference-only data center verification is intimately tied to the verifier being
 So what verification regime do you get if all my assumptions are true? If you share all the input data, all the output data, and the architecture, then you can get verification that data centers are inference-only. It doesn't seem particularly likely — but I'm glad there is another option now available.
 
 I'm not commenting much on model-weight security. I don't think that's the biggest issue. I think that has been more on track to getting solved than inference-only data center verification, so the fact that it's been more robustly solved makes it less of a candidate, in my opinion. Though of course it has good upsides too.
+
+![[Pasted image 20260814135854.png|346]]
 
 ## Harden before you verify
 
