@@ -16,7 +16,7 @@ Welcome to a little [[garden]] of my evolving thoughts, beliefs, and ideas. Here
 
 While at work, I'm likely thinking about [[AI progress]], [LLM evaluations](/tags/ai/eval), and maybe some [adversarial robustness](/tags/ai/adv). Outside of work, I enjoy making [[spaced repetition]] easier, playing and thinking about [[fog-of-war chess]], and doing a whole lot of miscellaneous, fairly shallow learning.
 
-Some pages on the site are encrypted by default, requiring that you enter a password below. If you'd like access, just ask—I currently have a low bar for giving these out. Aside from that, you're free to wander around and explore! I don't know what, if anything, you'll get out of it, but enjoy!
+Some pages on the site are encrypted by default, requiring that you enter a password below. If you'd like access, consider asking, or asking for particular pages you're most interested in. Aside from that, you're free to wander around and explore! I don't know what, if anything, you'll get out of it, but enjoy!
 
 ```poetry
 - Arunim

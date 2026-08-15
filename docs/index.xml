@@ -6,6 +6,12 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>index</title>
+    <link>https://arunim.fyi/</link>
+    <guid>https://arunim.fyi/</guid>
+    <description> Hello! Welcome to a little garden of my evolving thoughts, beliefs, and ideas. Here, I make portions of my mind readable to the world, and where I write up my notes on content I consume.</description>
+    <pubDate>Sat, 15 Aug 2026 23:49:18 GMT</pubDate>
+  </item><item>
     <title>run</title>
     <link>https://arunim.fyi/run</link>
     <guid>https://arunim.fyi/run</guid>
@@ -58,12 +64,6 @@
     <link>https://arunim.fyi/Utility-Engineering</link>
     <guid>https://arunim.fyi/Utility-Engineering</guid>
     <description>www.emergent-values.ai/ arxiv.org/abs/2502.08640 As AIs rapidly advance and become more agentic, the risk they pose is governed not only by their capabilities but increasingly ...</description>
-    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
-  </item><item>
-    <title>ml notes</title>
-    <link>https://arunim.fyi/ml-notes</link>
-    <guid>https://arunim.fyi/ml-notes</guid>
-    <description>todo organize these! Training ZeRO stage 1: data parallel all params on all gpus local loss, local gradients construct the global gradient on every by averaging the local gradients ...</description>
     <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
   </item>
     </channel>
