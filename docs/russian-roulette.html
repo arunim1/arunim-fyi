@@ -1,11 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"><head><script src="/static/sodium.js" spa-preserve></script>
+<style spa-preserve>
+.pw-form { display: flex; gap: 8px; margin: 1.1rem 0 0.4rem; max-width: 26rem; }
+.pw-input {
+  flex: 1; min-width: 0; padding: 0.55rem 0.9rem;
+  font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--dark); background: var(--light);
+  border: 1px solid var(--lightgray); border-radius: 8px;
+  outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pw-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 18%, transparent); }
+.pw-input::placeholder { color: var(--gray); }
+.pw-submit {
+  padding: 0.55rem 1.1rem; font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--secondary); background: transparent;
+  border: 1px solid var(--secondary); border-radius: 8px; cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.pw-submit:hover { background: var(--highlight); }
+.pw-status { font-size: 0.88rem; min-height: 1.2em; margin: 0.2rem 0 0; color: var(--gray); }
+.pw-status.pw-error { color: var(--secondary); font-weight: 500; }
+.pw-locked { margin: 1.4rem 0; }
+.pw-locked-sub { font-size: 0.92rem; color: var(--gray); margin: 0.4rem 0 0; }
+.pw-mirage { text-align: center; margin: 0 0 1.4rem; }
+.pw-mirage img { max-width: 55%; height: auto; opacity: 0.9; }
+.pw-mirage i { display: block; color: var(--gray); font-size: 0.95rem; margin-bottom: 0.4rem; }
+.pw-expired {
+  margin: 0 0 1rem; padding: 0.7rem 0.9rem;
+  border: 1px solid var(--lightgray); border-left: 3px solid var(--secondary);
+  border-radius: 6px; background: var(--highlight);
+  font-size: 0.92rem; color: var(--dark);
+}
+.share-popup-card {
+  background: var(--light); color: var(--dark);
+  max-width: 420px; margin: 16px; padding: 22px 24px;
+  border: 1px solid var(--lightgray); border-radius: 10px;
+  font-family: var(--bodyFont); font-size: 0.95rem; line-height: 1.55;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+.share-popup-card button { font-family: var(--bodyFont); font-size: 0.9rem; border-radius: 7px; cursor: pointer; padding: 6px 12px; }
+.share-popup-card .share-cancel { background: transparent; color: var(--dark); border: 1px solid var(--lightgray); }
+.share-popup-card .share-confirm { background: var(--secondary); color: var(--light); border: 1px solid var(--secondary); }
+.share-popup-card .share-confirm:hover { background: var(--tertiary); border-color: var(--tertiary); }
+.share-signoff {
+  font-family: biro_script_standardRgus, var(--bodyFont);
+  text-align: right; font-size: 1.3rem; color: var(--dark); margin: 4px 0 14px;
+}
+</style>
 <script spa-preserve>
 (function () {
   const GLOBAL_SALT_B64 = "xKonxQVtHr6bJ5FAqhuqQg==";
-  const WRAPPED_MK = ["RPA0nVnPF/zjj9CiUKMhTd5nwSDcbRotR/VsszGmgUd8rvpDeQBj0lPRSnwUupbBV08kFPf0uENbk/wG7rluAFLgt+OFcwGQNaKbgyeZ","/dWBvlWTaHc4QnKDVZzyOHZTTgCakSoWrzYiZ9jVgY7yeYthQBhbbqHiBP2/kItSYgdE4ZedDhqCooPgXN2ffObt5YiDxtjF2xyJxqjiAmGF8T0=","ho7Np++F5SAyF4DS/vOxZbrut5mS/NpjvamLx6r/LbsHuNKJBCz+RjGhf1WpRVbTWhATugvrW028Ai5ScrWicGQBt2IQGm2iJieQAYHoETdeZLL+wJRb","rbkDSzJOkuHT26tzV6dqxIvJ83TGlvonKm8Qtg2bmVsKl5yZQbEPzJdKyyT5Ab1nxYTd9hsPIbKdfkLmpluERVilA1txON0+/VRVcrQy60YVi3ma51k=","OIYdUlZJQWyATJypUx5+cWCtuMIJI08LQxwtVcx3EIwjVsAW/Uv5tAAYZgs6bl2WD3HA3MekB78AEVxZLUK83BpVhe3ncu3hYBxUYHqn2V8=","98yVgjXkIiL3U9PX0mZrxKenJNStgbUzyTGZH7SrtP5d3h8AUmfKBRdBzZxYrhlf2iczfp7lnaqZFTkvbh02hfs2yjFIfgFp5In/piQFosRH","qtS4LG6/92DKpYVqeuXsFsGCqxLlubfrj8Epv+6ev02ApDughon0GU6S0S5g+pp39VpkzYylpmiNCS1r4ZeSNQ3Uif8ee0LSkhOSiBSSdm7afyw=","vsdApVuJ9biQBt3Zy3S11/tjOB8RWA2NJoW1Bo1XI9krtwZOw4PAntyPe4NsM2Td1SIA/cLaAhGMr31ncqq2UK22paievSDdncUhaXkKX+bW2H86","iddNxZNQuDw3U6WjacB5fY0kmrEgOBLucJW57B4P6wdaM7+QRRjbOwVY0rFBVgJxgENGLnVo0No53g/xSLiRtCAkLqnI5XGrEC5jjRf1zPwHaMI=","qrXBxh8ppoAzm93gt7nD4h4EjPQCAStm68izgWJWEcESRiSjUBofbXRqsHyrN96dMhClLXk9eJx6Ppmc4jHiFpZrlOfMTmh3FmnTw7HuSbhxtA==","G5/8km54bM5B3Lfh4Vxz2Rf1TGrgFBnBJX9A9Irr06BjnG+su3JKAwZwBx4mQGysPm80+jO63R3g3+8nmx3fhmy33aq9ORs5k5hMARP+ogLLQhpXsQ==","87gkRFBfWrzS0Q+OJuPV6aMsCfnjpWIY5LZBpumENg7tC7UFvTl+zDafWoG5P/gyyWt4Jte9YzhiTxik0c/RdXxtzBPucSRD5iT/0vrqont9","P53ys54QxgeoUps2N4RZu25m3f/48Y45edKy8Y+Y9Ha50eSWF8W81tAYKJEuYs6y8r7i43O47Pq17Ln7bwVkBJWlnrrruJhHDc1plQAGZD3fAOzl","+WLJAGasUMIvZ5vS2qTYyvFYTsHRGPrwqOId/BRXwtzLkHSG0PU5QLnLGTi6hUoZvupi58nstCoqFvXR1+86M1CiQt+C0Y9Z82fDQqwaoVor2Ns=","JK2hanUHFDu4jR241MtwXhXvQNXv4j/dkAII94XTYPhy85Sh7TWQPiiuGpNAnbB32rGAH09fq0+2Cd40IC9Ixp1oI0K1bLkDCzfiYksRVQPz","/ScYWFJFYcrj7G0m/C6kba8y031UoXI4NWa/8T13RC2LcksWA4eDhZAt70SCzLJmyRJLtO5EvoONVPe1hztf/cUx49hZ9lGjAnWo+Qkm/sfRfHtUJEU=","wv+BQVhrIqtg1de2J/WpSL9A2ivxLYJ1+vao4mTyuO9graCSGs8wiRbj9xkMPsebxVGTDHFWNENCWzZhzkLBsLpOIow7Nm0OlPXHgNhb2/tsTbW0umrM","5if5JLXaRcVCorvHUnyz1aQ2DWMkzv+9rLkxngzIPW4aSM9P2a7iKJZadzRDoU2sf8rsHPyoSmgkIjWW1dwHn0B4QCfanOekJBxcn6Va7Qi6eQ==","JTjr95pOSnhhzpxvpSXZedy5fCDgxrgNVjE6a0geq3XW4CccPA8nZIWZwx7jqGun/SWK69hbCeGGhomd46SP6ZuYeoit9OjI00Zp3Kk7OQ==","jj2MmgKdvhUxs8ufb6/e8Lz/7Qe4m3Dy/CWHcc6Cj6R5ebwUhfs5OcpI8BJ6rB3IsJaopovIdSafIBUzIHCCfcRIeCpUKCXN1dcP","lPBovYtzGZuVJqzPXunlqmruprfwg1xuBlsSYTuOZON5/olVQui2R2mxeaeU15iyx5QHjq92UEmsw7l0cO1doL9HjbfiNGrp7X/3bA==","WUp0a3HrkG8Kil4WbCaubBFMy9SHWy2n/FRCtafvhNJXEODwSt9hY710/lrkbD90bclhjXQv9VmuOMYRUY8IGYItHgJOD1Rno6drERZK+BWJHQ==","X4o8ekxjpEhYzkNp6mbhIoDs8VbaoUMKlQbc3pkSv7bYkO/mbg7o0Dw0A2K81Zi1S+8Cw5ywEHQrx789k8nvIj2hqv1jPaDS/70T00jU7o6S","LEMeiPPHQmYC3GIi/uwIRi7QUWAWudxkjh3aqRZ91PZ/caCPjI16PzVWjmNXOoZZas4y8muWjiu2c+46FuOQkWbC8l96UkB+JcAwjxI/E8l5y8okdX5V","Y4kHMO/oeFy3b8XTR+huVVoWtPkZjUThMNOnIdl1hy2GdPhLfcLBlWBqzdq7ywxjSeLUfbcm8ilBG5N9XL1rHNVsj4MVG/vk+3NL6z0rloUFZso9TLQ=","cMbSng5THNj++et8iDSNJo8WRU2nlmpyY1zIDjJEgDdaHw70aAj5aE3ufkGBmqB/+He41AhCGnMd5KN/8SENBzjocWilpHLJDFEhWoSTkIYeSb9Rns/FNw=="];
+  const WRAPPED_MK = ["WU+cqT2CAecKIWctzczo1rSVZYN6/btt5dLzFXmz3h+C2kgGHdPaInfWTHB07BJWKIOBTGuYWFKy3wOPaHCP2RnIeC/eq+FK0lflpDY5","jetGCauMsrXMkoDDW6jAtlyKkAfDhCK3/TUeXzX9O8z3dIx8dGcKLEuf+XbTwnFrcLlUCgP6lG61cr685p0T1ozE5Ah3fP3reB81Rz+WvpU0yCY=","N6U0sDF4mZmE+gAj200nYjCwVmgx7FK3j5hXqgkCeUkDKIA/0MQJPMvH5A5pom3HaMiWktnStBGv8+eJ/FZdNPEICg/41g5xu45aCVzu33ky+ogBAkn1","8zM1L0RUpsKoAC98fBCsCo6jPk4RyCDHiCwumLwpMyzIsdTomc75NdMjaVlUCvsLhskyT2Uw/iHlNG1z7NnqYp6LMvFO9jo3XC0jCNcIXer3+vQeDJY=","2jDyaUcYwveIpP1ViD7yU9iEEUCKtyKIJb9zZqdzrWUcBy/5mkV/j5QyiM/kQQgoLe7cBiXCdSzeHQtL8AyI7m5hMg5ncuK++Pc8r28jiSM=","vUQ4FEymdfMi6aqJmn7eWPnWrxOT623uX1vKab7t529f6OY1fKyQO8iu1XF+iJjN3eTlPnLft0CY2Uh64G+SyRmWkGVs5A790K23OcLk1NTJ","m5Zmos58NFZWQ5bqz74A/yBvvL92Jia5UABroRE5cJK6c4cfquarxUGWc2yv5WyXVtSDgChgpc5SGIDbAbkfaTt25qw9GkyAl0V/nQEnKZ0W9Lw=","3mcQFTwdGa0QV/HAnB+7mBKkMJXC8dWrr36oVeCsS0bobqs/gB696pAuJR5GDybWJ4/jSITpJRYEcGo/oKI2bb6t3MtnWyC4RsnxM14MruDBQ9yG","vuUV7kGol2DCKIxhPHwe7a/gWkwPlYm/2UtUo/nIno9IWJlpQahXLkg7dlpw4WLZHTac4Qtl0B/EFwITPw5Xx3XbiC1zJmUJ5Y6jQiTz+TweQ2I=","ezfejckPLwzNLFWtJnsGY1lMb8fICBAwTcgARTHKR73FLn3i+ME1KoNE9Fb6JP14lVnjZN3gj83FoTxi1PaKmSsdPG3cvxfSkKlVTnIESGsZug==","0dr8WvDb051cr2HDADq1aBl7/2C3jKANUHSrFU+iRLwxIuDsMbdfDER/ag+y+7ROUTC2teaOfI92frQ1aB5g5ee5Ntyg9B6REUsEo17TDQRfrEkNcQ==","inV7bxMK8Kh/Ey/w0IFmdvWzo+6UgTCcr/XyhLo9hZS4zHCOByNI3fe4vBi73+6B1QMuct0o2PnQPmlw+yuuH5cj3z1eIIWqmBNfXib4Gba1","RgPsQFUqHRDP1tKF6XZZH9DCrMqGXmuTh/HtUHABD91O0AcHEmlgeFQlLDavdJ59waTCfmPx+DmpC7oDw331xuSboRF2lnxom41V34iaBEAuDH+g","XraGUZv5PH0c3/ZIiwsSTaimufZZKTkxtFCkC1T02w2MCexduNujh3p+4XoRDKXhIMcZdr2M80hVwwNbViyE8DpEQbtlLT1nt3aG+mVL7BJAmhM=","0sKz+mTWI3rWH5z/lhFaasQ0rxwO/fOwX/n8tfkyLbwo35N8sVrKtHfmuQ92GFIRGzvwH7o6UvygAnY6bHDoU7ZsKrclwWFnjYRWPs2Y4ws9","POxeVyyO4D8r7Gq79ISN0oNoNVTl9Eo1BMtKxc8iJNAV5XumIBOPj54bYxWeX62PvYH9zwvyrECMselIeIh83k41GdECClFGxiZc6QfHyijXXGf+XBk=","cksuomtBxy5NSaqe+ipElG5Y4xokORu3c2tv4/76QF1NSfO43kBkRQVSwdxxdFpxS/s8lzcq7GEi010xRPdlWbyxpO3V3krryU624ASXFpssjQUToqju","ShBWg6xBEWFROmk8a6faXiC0zM3pUgss20ECPuT6DWeeNs/9eKCNlP/EO/a0d4Gl/RNjjvrkPzn6DuiyCl9QSiObWbAAhOVLOVX1pWDKslGUCQ==","HDxeZolxLi+2MoXhQ45SQ/Gm9xklYI0ImkndKKhKiyQq+nudgEzOLEyflodiZJQXBQFvi26yMXWA26yLDahgRi3sdv1bgMCPlFlC0TcJGA==","ugZjYzTAO6kxwyFHCtYZzPDkcL//JzLCDJDpKjUXp34sCEwE1A+uczRuPjhu3HGwjw92kfuhtFGOhq/9L1W7/PaA5C3MY3XoDNu8","jhGN211aqJAfaw5Qjy0PFmEs6fdyaiYWWSgm2p59zemIy22xQjRpGj8fV0nWBtZ3Z1Im9BNay4LYIB3TEuTjdZmo3AMWnY0d0KTqgg==","PBXlTr2C8hbfvFgBhHDGPVmNHIxwk/N9cUwtqtlO38TLpMdf4Z70Gnuj546WJa0uoys1YVlY3zdCbo33YQhjGJMi7IGB7Hq262RV/a1cyGKjGw==","CJJMkSHd7fNJMCqL9lMDV4INurC1qPZrJAryWXWRS7deaFA7pqJV6h9UGxQLTNSBUmIZeuV6GtOgafRuIlgCw/9Ykb8guZRAY1fsYj7fajAd","0b3Ffz6sMdoIrHDgTE9g0zKNb7urr/yacAP40EajdCsLIo5XWaSgABxRqi5bNJLkioslfhx2gtw+wcR2fKCIRhm+XM7rpQcP08xIsJlEFSbqLwav91xx","kjl5v1elEqu3LUcK9wCjOG7IkyKcaCEG+pVa3uevezvhcTPR+cYx3fcMtCOQc00fQsQ8ELwh3vE4sji+Qg3W6HLpOJ+wgsNyaZZhwcXKNqezWToobmA=","sN7tDukhqoYbi/Vn8qFJ6nqd28GCPrKBPHWz3F6M+DmT/B6zbUspyIF8q5vqlm1xsRC5U7WZBlt+w/h0+LVT3vYDmw4/drLf1usqtBIELRK3JX8ZAcQRFw=="];
   const TTL_MS = 600000;
-  const VERSION = "2";
+  const VERSION = "3";
 
   // One-shot migration: clear stale entries from old crypto-js scheme.
   if (localStorage.getItem("crypto_version") !== VERSION) {
@@ -109,36 +156,233 @@
     return mk;
   }
 
+  // ------------------------------------------------------------------
+  // Share-link grants: per-slug page keys handed out via #k= fragments.
+  // Stored in localStorage.shareGrants = { "<slug>": "<b64url key>" }.
+  // No TTL bookkeeping — a grant dies naturally when the site re-keys
+  // (epoch rollover / revoke) and its decrypt starts failing; we prune then.
+  // ------------------------------------------------------------------
+  function loadGrants() {
+    try { return JSON.parse(localStorage.getItem("shareGrants") || "{}"); }
+    catch (_) { return {}; }
+  }
+  function saveGrants(g) { localStorage.setItem("shareGrants", JSON.stringify(g)); }
+
+  // Parse a #k= fragment once at startup, before anything can clobber it.
+  let fragmentKeyB64 = null;
+  if ((location.hash || "").startsWith("#k=")) {
+    fragmentKeyB64 = location.hash.slice(3);
+  }
+  function fragmentKeyBytes() {
+    if (!fragmentKeyB64) return null;
+    try { return sodium.from_base64(fragmentKeyB64, sodium.base64_variants.URLSAFE_NO_PADDING); }
+    catch (_) { return null; }
+  }
+  function stripFragment() {
+    if ((location.hash || "").startsWith("#k=")) {
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+    fragmentKeyB64 = null;
+  }
+
+  function showExpiredMessage(article) {
+    if (article.dataset.expiredShown) return;
+    if (article.closest(".popover") || article.closest(".search-layout")) return;
+    const msg = article.querySelector(".encrypted-message");
+    if (!msg) return;
+    article.dataset.expiredShown = "1";
+    const div = document.createElement("div");
+    div.className = "pw-expired";
+    div.textContent = "Looks like that key has expired or is invalid — consider asking me for access again. Keys expire and rotate every couple of months.";
+    msg.insertBefore(div, msg.firstChild);
+  }
+
+  // --- in-place passphrase login on locked pages --------------------------
+  // The locked placeholder carries a .pw-form; one delegated handler serves
+  // every private page (and survives SPA navigations — it's on document).
+  // Success = same storage the homepage login writes, so it unlocks the
+  // whole site, then decrypts this page in place. No redirect.
+  document.addEventListener("submit", async (e) => {
+    const form = e.target;
+    if (!form || !form.classList || !form.classList.contains("pw-form")) return;
+    e.preventDefault();
+    const input = form.querySelector(".pw-input");
+    const status = form.parentElement.querySelector(".pw-status");
+    const setStatus = (text, isError) => {
+      if (!status) return;
+      status.textContent = text;
+      status.classList.toggle("pw-error", !!isError);
+    };
+    const passphrase = input && input.value;
+    if (!passphrase) { setStatus("Please enter your password.", true); return; }
+    setStatus("Checking…", false);
+    await ready();
+    try {
+      const KEK = await deriveKEK(passphrase);
+      const mk = unwrapMasterKey(KEK);
+      if (!mk) {
+        setStatus("That password didn't work. Try again.", true);
+        return;
+      }
+      localStorage.setItem("userPassword", passphrase);
+      storeMasterKey(mk);
+      setStatus("", false);
+      await decryptVisibleArticles(false);
+    } catch (err) {
+      setStatus("Something went wrong — try refreshing the page.", true);
+    }
+  });
+
+  // --- copy-share-link affordance ------------------------------------------
+  // Sits on the date/reading-time line (content-meta, outside the sealed
+  // article), right-aligned — same place the plain copy button lives on
+  // public pages. Only injected for passphrase holders: share-link visitors
+  // get no button, so sharing stays one degree deep (Arunim's spec).
+  function injectShareButton(article, pageKey) {
+    if (article.closest(".popover") || article.closest(".search-layout")) return;
+    const slug = article.getAttribute("data-slug");
+    if (!slug) return;
+    const meta = document.querySelector(".center p.content-meta") || document.querySelector("p.content-meta");
+    if (!meta || meta.querySelector(".share-link-btn")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "share-link-btn";
+    btn.textContent = "share";
+    btn.title = "Create a link that unlocks just this page";
+    btn.addEventListener("click", () => showSharePopup(slug, pageKey));
+    meta.appendChild(btn);
+  }
+
+  function showSharePopup(slug, pageKey) {
+    const existing = document.getElementById("share-popup-overlay");
+    if (existing) existing.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "share-popup-overlay";
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:center;justify-content:center;";
+    const card = document.createElement("div");
+    card.className = "share-popup-card";
+    card.innerHTML =
+      '<p style="margin:0 0 10px;"><strong>This page is private.</strong></p>' +
+      '<p style="margin:0 0 4px;">Please share it carefully and only with people you trust. Links expire and rotate every couple of months.</p>' +
+      '<p class="share-signoff">Arunim</p>' +
+      '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+      '<button type="button" class="share-cancel">Cancel</button>' +
+      '<button type="button" class="share-confirm">Create and copy link</button>' +
+      "</div>";
+    overlay.appendChild(card);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.remove(); });
+    card.querySelector(".share-cancel").addEventListener("click", () => overlay.remove());
+    card.querySelector(".share-confirm").addEventListener("click", async (e) => {
+      const link =
+        location.origin + "/" + encodeURI(slug) + "#k=" +
+        sodium.to_base64(pageKey, sodium.base64_variants.URLSAFE_NO_PADDING);
+      try { await navigator.clipboard.writeText(link); } catch (_) {
+        // Clipboard API unavailable (e.g. non-HTTPS) — show the link instead.
+        window.prompt("Copy this link:", link);
+      }
+      e.target.textContent = "Copied ✓";
+      setTimeout(() => overlay.remove(), 900);
+    });
+    document.body.appendChild(overlay);
+  }
+
+  // Resolve + decrypt every sealed article. Per article, keys are tried in
+  // order: master-key unwrap of data-wk (friends), stored grant for its slug,
+  // then the #k= fragment (first visit via a share link).
   async function decryptVisibleArticles(forceRegenerate) {
     await ready();
     const mk = await authenticateAndGetMasterKey(forceRegenerate);
-    if (!mk) return false;
 
     let any = false;
+    let masterFailed = false;
     const decryptedArticles = [];
     document.querySelectorAll("article.encrypted").forEach((article) => {
       const blobEl = article.querySelector(".encrypted-content");
       if (!blobEl) return;
-      try {
-        const blob = (blobEl.textContent || "").trim();
-        if (!blob) return;
-        const plain = aeadOpen(blob, mk);
-        const html = sodium.to_string(plain);
-        article.innerHTML = html;
-        article.classList.remove("encrypted");
-        article.classList.add("decrypted");
-        decryptedArticles.push(article);
-        any = true;
-      } catch (e) {
-        // Wrong key (e.g., master key rotated) — caller can retry with forceRegenerate.
+      const blob = (blobEl.textContent || "").trim();
+      if (!blob) return;
+      const slug = article.getAttribute("data-slug");
+      const wk = article.getAttribute("data-wk");
+
+      let plain = null;
+      let usedKey = null;
+      let viaMaster = false;
+
+      // 1. Friend path: unwrap this page's key with the master key.
+      if (mk && wk) {
+        try {
+          const pageKey = aeadOpen(wk, mk);
+          plain = aeadOpen(blob, pageKey);
+          usedKey = pageKey;
+          viaMaster = true;
+        } catch (_) {
+          // Master key stale (rotated) — caller may retry with forceRegenerate.
+          masterFailed = true;
+        }
       }
+
+      // 2. Stored grant from a past share link.
+      if (!plain && slug) {
+        const grants = loadGrants();
+        if (grants[slug]) {
+          try {
+            const k = sodium.from_base64(grants[slug], sodium.base64_variants.URLSAFE_NO_PADDING);
+            plain = aeadOpen(blob, k);
+            usedKey = k;
+          } catch (_) {
+            // Grant went stale (epoch rollover / revoke) — prune + explain.
+            delete grants[slug];
+            saveGrants(grants);
+            showExpiredMessage(article);
+          }
+        }
+      }
+
+      // 3. First visit via a share link: the fragment IS the page key.
+      if (!plain && fragmentKeyB64) {
+        const k = fragmentKeyBytes();
+        if (k) {
+          try {
+            plain = aeadOpen(blob, k);
+            usedKey = k;
+            if (slug) {
+              const grants = loadGrants();
+              grants[slug] = fragmentKeyB64;
+              saveGrants(grants);
+            }
+            stripFragment();
+          } catch (_) {
+            showExpiredMessage(article);
+          }
+        } else {
+          showExpiredMessage(article);
+        }
+      }
+
+      if (!plain) return;
+      article.innerHTML = sodium.to_string(plain);
+      article.classList.remove("encrypted");
+      article.classList.add("decrypted");
+      // Passphrase holders can mint links; share-link visitors cannot
+      // (one degree of sharing).
+      if (viaMaster) injectShareButton(article, usedKey);
+      decryptedArticles.push(article);
+      any = true;
+      // Consume the fragment on ANY successful decrypt — a logged-in friend
+      // opening a share link would otherwise keep a live page key sitting in
+      // their address bar, exactly the copy/paste leak the strip exists to
+      // prevent (review finding #6).
+      if (fragmentKeyB64) stripFragment();
     });
-    // After unsealing pages, walk for ".enc" asset refs and decrypt those too.
-    // Fire and forget — images appear progressively as fetches return.
+
+    // After unsealing pages, decrypt ".enc" asset refs with the per-asset
+    // keys embedded inside each page's sealed body. Fire and forget — images
+    // appear progressively as fetches return.
     for (const article of decryptedArticles) {
-      decryptAssetRefsIn(article, mk).catch(() => {});
+      decryptAssetRefsIn(article, readAssetKeys(article)).catch(() => {});
     }
-    return any;
+    // Signal a retry only when the master path specifically looks stale.
+    return any || !masterFailed;
   }
 
   // Inlined here (rather than imported) so the IIFE is self-sufficient and
@@ -157,7 +401,24 @@
     return ASSET_MIME[ext] || "application/octet-stream";
   }
 
-  async function decryptAssetRefsIn(root, masterKey) {
+  // Per-asset keys ride inside each page's sealed body as a JSON map keyed by
+  // "assets/<name>.enc" (see the build emitter). Read it post-decrypt.
+  function readAssetKeys(root) {
+    const el = root.querySelector("script.asset-keys");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent || "{}"); } catch (_) { return {}; }
+  }
+
+  function assetKeyForUrl(assetKeys, rawUrl) {
+    const m = rawUrl.match(/assets\/.+\.enc$/);
+    if (!m) return null;
+    const b64 = assetKeys[m[0]];
+    if (!b64) return null;
+    try { return sodium.from_base64(b64, sodium.base64_variants.ORIGINAL); }
+    catch (_) { return null; }
+  }
+
+  async function decryptAssetRefsIn(root, assetKeys) {
     if (!window.__quartzAssetCache) window.__quartzAssetCache = new Map();
     const cache = window.__quartzAssetCache;
     const els = root.querySelectorAll(ENC_SELECTORS);
@@ -167,13 +428,15 @@
       if (!raw) return;
       const cached = cache.get(raw);
       if (cached) { el.setAttribute(attr, cached); return; }
+      const assetKey = assetKeyForUrl(assetKeys, raw);
+      if (!assetKey) return;
       try {
         const resp = await fetch(raw);
         if (!resp.ok) return;
         const enc = new Uint8Array(await resp.arrayBuffer());
         const nonce = enc.slice(0, 24);
         const cipher = enc.slice(24);
-        const plain = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(null, cipher, null, nonce, masterKey);
+        const plain = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(null, cipher, null, nonce, assetKey);
         const origUrl = raw.replace(/\.enc$/, "");
         const blob = new Blob([plain], { type: mimeFromUrl(origUrl) });
         const blobUrl = URL.createObjectURL(blob);
@@ -185,6 +448,7 @@
     }));
   }
   window.quartzDecryptAssets = decryptAssetRefsIn;
+  window.quartzReadAssetKeys = readAssetKeys;
 
   window.quartzDecrypt = async function () {
     if (!(await decryptVisibleArticles(false))) {
@@ -213,7 +477,7 @@
     startup();
   }
 })();
-</script><title>russian roulette - arunim.fyi</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono&amp;family=DM Serif Display:wght@400;700&amp;family=Bricolage Grotesque:ital,wght@0,350;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="canonical" href="https://arunim.fyi/russian-roulette"/><meta name="robots" content="noindex, follow"/><meta property="og:title" content="russian roulette"/><meta property="og:description" content="This page is locked."/><meta property="og:type" content="article"/><meta property="og:url" content="https://arunim.fyi/russian-roulette"/><meta property="og:site_name" content="arunim.fyi"/><meta property="og:locale" content="en_US"/><meta property="og:image" content="https://arunim.fyi/static/og-image.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="russian roulette"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="russian roulette"/><meta name="twitter:description" content="This page is locked."/><meta name="twitter:image" content="https://arunim.fyi/static/og-image.png"/><meta name="twitter:image:alt" content="russian roulette"/><link rel="icon" type="image/svg+xml" href="./static/icon.svg"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" href="./static/favicon-32.png"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" href="./static/favicon-32-dark.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="./static/favicon-16.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="./static/favicon-16-dark.png"/><meta name="description" content="This page is locked."/><link rel="alternate" type="application/rss+xml" title="arunim.fyi" href="https://arunim.fyi/index.xml"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="default"/><meta name="apple-mobile-web-app-title" content="The Garden"/><link rel="apple-touch-icon" href="./static/apple-touch-icon.png"/><link rel="manifest" href="./static/manifest.json"/><meta name="generator" content="Quartz"/><meta name="quartz-visibility" content="private"/><link href="./static/font/font-style.css" rel="stylesheet" type="text/css" spa-preserve/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("./static/contentIndex.json").then(data => data.json())</script></head><body data-slug="russian-roulette"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href=".">arunim.fyi</a></h2><div class="spacer mobile-only"></div><div class="search"><button class="search-button" id="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div id="search-container"><div id="search-space"><input type="search" autocomplete="off" id="search-bar" name="search" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><button class="darkmode" id="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="autoIcon" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24" xml:space="preserve" aria-label="Device mode"><title>Device mode</title><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l18 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="./">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>russian roulette</a></div></nav><h1 class="article-title">russian roulette</h1><p show-comma="true" class="content-meta"><span>Dec 13, 2024 – Jan 02, 2025</span><span>2 min read</span></p><ul class="tags"><li><a href="./tags/math" class="internal tag-link">math</a></li></ul></div></div><article class="popover-hint encrypted"><div class="encrypted-message"><p style="margin-left: 0%;">🔒 This page is locked. Return to <a href="/">the Garden</a> and enter a password.<br></br><i style="display: block; text-align: center;">Nothing but a mirage ahead...</i><div style="text-align: center;"><img src="./static/mirage.jpg" alt="404 Illustration" style="max-width: 60%; height: auto;" /></div></p></div><div class="encrypted-content" style="display: none;">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</div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[&quot;root-directory&quot;],&quot;focusOnHover&quot;:false}"></div><button id="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+</script><title>russian roulette - arunim.fyi</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono&amp;family=DM Serif Display:wght@400;700&amp;family=Bricolage Grotesque:ital,wght@0,350;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="canonical" href="https://arunim.fyi/russian-roulette"/><meta name="robots" content="noindex, follow"/><meta property="og:title" content="russian roulette"/><meta property="og:description" content="This page is locked."/><meta property="og:type" content="article"/><meta property="og:url" content="https://arunim.fyi/russian-roulette"/><meta property="og:site_name" content="arunim.fyi"/><meta property="og:locale" content="en_US"/><meta property="og:image" content="https://arunim.fyi/static/og-image.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="russian roulette"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="russian roulette"/><meta name="twitter:description" content="This page is locked."/><meta name="twitter:image" content="https://arunim.fyi/static/og-image.png"/><meta name="twitter:image:alt" content="russian roulette"/><link rel="icon" type="image/svg+xml" href="./static/icon.svg"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" href="./static/favicon-32.png"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" href="./static/favicon-32-dark.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="./static/favicon-16.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="./static/favicon-16-dark.png"/><meta name="description" content="This page is locked."/><link rel="alternate" type="application/rss+xml" title="arunim.fyi" href="https://arunim.fyi/index.xml"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="default"/><meta name="apple-mobile-web-app-title" content="The Garden"/><link rel="apple-touch-icon" href="./static/apple-touch-icon.png"/><link rel="manifest" href="./static/manifest.json"/><meta name="generator" content="Quartz"/><meta name="quartz-visibility" content="private"/><link href="./static/font/font-style.css" rel="stylesheet" type="text/css" spa-preserve/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("./static/contentIndex.json").then(data => data.json())</script></head><body data-slug="russian-roulette"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href=".">arunim.fyi</a></h2><div class="spacer mobile-only"></div><div class="search"><button class="search-button" id="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div id="search-container"><div id="search-space"><input type="search" autocomplete="off" id="search-bar" name="search" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><button class="darkmode" id="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="autoIcon" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24" xml:space="preserve" aria-label="Device mode"><title>Device mode</title><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l18 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="./">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>russian roulette</a></div></nav><h1 class="article-title">russian roulette</h1><p show-comma="true" class="content-meta"><span>Dec 13, 2024 – Jan 02, 2025</span><span>2 min read</span></p><ul class="tags"><li><a href="./tags/math" class="internal tag-link">math</a></li></ul></div></div><article class="popover-hint encrypted" data-slug="russian-roulette" data-wk="6rK3IrQJkUPuKi52hJSbdb+xas/s8iqZLkbixvtC9Cp8K4mqOS/AlofXf/vWli9ic/b5UHFd8UwnUUESnuGE5Jn5FbdHDkF8"><div class="encrypted-message pw-locked"><div class="pw-mirage"><i>Nothing but a mirage ahead... This page is locked 🔒</i><img src="./static/mirage.jpg" alt="Mirage illustration" /></div><form class="pw-form"><input type="password" class="pw-input" placeholder="passphrase" autocomplete="current-password" aria-label="passphrase"><button type="submit" class="pw-submit">unlock</button></form><div class="pw-status" role="status" aria-live="polite"></div><div class="pw-locked-sub">If you're still seeing this after logging in, try refreshing the page.</div></div><div class="encrypted-content" style="display: none;">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</div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[&quot;root-directory&quot;],&quot;focusOnHover&quot;:false}"></div><button id="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
                 s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
                 c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
                 C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829

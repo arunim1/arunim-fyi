@@ -5,26 +5,67 @@
 <p>While at work, I’m likely thinking about <a href="./AI-progress" class="internal alias" data-slug="AI-progress">AI progress</a>, <a href="./tags/ai/eval" class="internal alias" data-slug="tags/ai/eval">LLM evaluations</a>, and maybe some <a href="./tags/ai/adv" class="internal alias" data-slug="tags/ai/adv">adversarial robustness</a>. Outside of work, I enjoy making <a href="./spaced-repetition" class="internal alias" data-slug="spaced-repetition">spaced repetition</a> easier, playing and thinking about <a href="./fog-of-war-chess" class="internal alias" data-slug="fog-of-war-chess">fog-of-war chess</a>, and doing a whole lot of miscellaneous, fairly shallow learning.</p>
 <p>Some pages on the site are encrypted by default, requiring that you enter a password below. If you’d like access, consider asking, or asking for particular pages you’re most interested in. Aside from that, you’re free to wander around and explore! I don’t know what, if anything, you’ll get out of it, but enjoy!</p>
 <pre class="poetry">- Arunim</pre>
+<style spa-preserve>
+.pw-form { display: flex; gap: 8px; margin: 1.1rem 0 0.4rem; max-width: 26rem; }
+.pw-input {
+  flex: 1; min-width: 0; padding: 0.55rem 0.9rem;
+  font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--dark); background: var(--light);
+  border: 1px solid var(--lightgray); border-radius: 8px;
+  outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pw-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 18%, transparent); }
+.pw-input::placeholder { color: var(--gray); }
+.pw-submit {
+  padding: 0.55rem 1.1rem; font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--secondary); background: transparent;
+  border: 1px solid var(--secondary); border-radius: 8px; cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.pw-submit:hover { background: var(--highlight); }
+.pw-status { font-size: 0.88rem; min-height: 1.2em; margin: 0.2rem 0 0; color: var(--gray); }
+.pw-status.pw-error { color: var(--secondary); font-weight: 500; }
+.pw-locked { margin: 1.4rem 0; }
+.pw-locked-sub { font-size: 0.92rem; color: var(--gray); margin: 0.4rem 0 0; }
+.pw-mirage { text-align: center; margin: 0 0 1.4rem; }
+.pw-mirage img { max-width: 55%; height: auto; opacity: 0.9; }
+.pw-mirage i { display: block; color: var(--gray); font-size: 0.95rem; margin-bottom: 0.4rem; }
+.pw-expired {
+  margin: 0 0 1rem; padding: 0.7rem 0.9rem;
+  border: 1px solid var(--lightgray); border-left: 3px solid var(--secondary);
+  border-radius: 6px; background: var(--highlight);
+  font-size: 0.92rem; color: var(--dark);
+}
+.share-popup-card {
+  background: var(--light); color: var(--dark);
+  max-width: 420px; margin: 16px; padding: 22px 24px;
+  border: 1px solid var(--lightgray); border-radius: 10px;
+  font-family: var(--bodyFont); font-size: 0.95rem; line-height: 1.55;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+.share-popup-card button { font-family: var(--bodyFont); font-size: 0.9rem; border-radius: 7px; cursor: pointer; padding: 6px 12px; }
+.share-popup-card .share-cancel { background: transparent; color: var(--dark); border: 1px solid var(--lightgray); }
+.share-popup-card .share-confirm { background: var(--secondary); color: var(--light); border: 1px solid var(--secondary); }
+.share-popup-card .share-confirm:hover { background: var(--tertiary); border-color: var(--tertiary); }
+.share-signoff {
+  font-family: biro_script_standardRgus, var(--bodyFont);
+  text-align: right; font-size: 1.3rem; color: var(--dark); margin: 4px 0 14px;
+}
+</style>
 <article class="popover-hint encrypted">
-  <div class="encrypted-message">
+  <div class="encrypted-message pw-locked">
     <div id="loginSection">
-      <form id="decryptForm" style="display:flex;align-items:center;gap:10px;margin:20px 0;">
-        <input type="password" id="passwordInput" placeholder="Enter your password"
-               autocomplete="current-password"
-               style="padding:10px;border:1px solid #ccc;border-radius:5px;font-size:16px;flex:1;font-family:inherit;">
-        <button type="submit" id="decryptButton"
-                style="padding:8px 12px;background-color:transparent;border-radius:5px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:inherit;"
-                onmouseover="this.style.backgroundColor='grey';this.style.color='white';"
-                onmouseout="this.style.backgroundColor='transparent';this.style.color='';">
-          🔑
-        </button>
+      <form id="decryptForm" class="pw-form">
+        <input type="password" id="passwordInput" class="pw-input" placeholder="passphrase"
+               autocomplete="current-password" aria-label="passphrase">
+        <button type="submit" id="decryptButton" class="pw-submit">unlock</button>
       </form>
-      <div id="loginStatus" role="status" aria-live="polite" style="display:none;margin-top:10px;font-size:14px;"></div>
-      <div class="smallprint" style="margin-top:10px;">If you're still seeing this after logging in, try refreshing the page.</div>
+      <div id="loginStatus" class="pw-status" role="status" aria-live="polite"></div>
+      <div class="pw-locked-sub" style="margin-top:6px;">If you're still seeing this after logging in, try refreshing the page.</div>
     </div>
     <div id="authenticatedSection" style="display:none;margin:20px 0;">
-      <span style="color:green;">✓ You're already logged in.</span>
-      <span class="smallprint" style="margin-left:8px;">If content is still encrypted, try refreshing the page.</span>
+      <span style="color:var(--secondary);font-weight:500;">✓ You're already logged in.</span>
+      <span class="pw-locked-sub" style="margin-left:8px;">If content is still encrypted, try refreshing the page.</span>
     </div>
   </div>
 </article>
@@ -32,7 +73,7 @@
 <script>
 (async function () {
   const GLOBAL_SALT_B64 = "xKonxQVtHr6bJ5FAqhuqQg==";
-  const WRAPPED_MK = ["RPA0nVnPF/zjj9CiUKMhTd5nwSDcbRotR/VsszGmgUd8rvpDeQBj0lPRSnwUupbBV08kFPf0uENbk/wG7rluAFLgt+OFcwGQNaKbgyeZ","/dWBvlWTaHc4QnKDVZzyOHZTTgCakSoWrzYiZ9jVgY7yeYthQBhbbqHiBP2/kItSYgdE4ZedDhqCooPgXN2ffObt5YiDxtjF2xyJxqjiAmGF8T0=","ho7Np++F5SAyF4DS/vOxZbrut5mS/NpjvamLx6r/LbsHuNKJBCz+RjGhf1WpRVbTWhATugvrW028Ai5ScrWicGQBt2IQGm2iJieQAYHoETdeZLL+wJRb","rbkDSzJOkuHT26tzV6dqxIvJ83TGlvonKm8Qtg2bmVsKl5yZQbEPzJdKyyT5Ab1nxYTd9hsPIbKdfkLmpluERVilA1txON0+/VRVcrQy60YVi3ma51k=","OIYdUlZJQWyATJypUx5+cWCtuMIJI08LQxwtVcx3EIwjVsAW/Uv5tAAYZgs6bl2WD3HA3MekB78AEVxZLUK83BpVhe3ncu3hYBxUYHqn2V8=","98yVgjXkIiL3U9PX0mZrxKenJNStgbUzyTGZH7SrtP5d3h8AUmfKBRdBzZxYrhlf2iczfp7lnaqZFTkvbh02hfs2yjFIfgFp5In/piQFosRH","qtS4LG6/92DKpYVqeuXsFsGCqxLlubfrj8Epv+6ev02ApDughon0GU6S0S5g+pp39VpkzYylpmiNCS1r4ZeSNQ3Uif8ee0LSkhOSiBSSdm7afyw=","vsdApVuJ9biQBt3Zy3S11/tjOB8RWA2NJoW1Bo1XI9krtwZOw4PAntyPe4NsM2Td1SIA/cLaAhGMr31ncqq2UK22paievSDdncUhaXkKX+bW2H86","iddNxZNQuDw3U6WjacB5fY0kmrEgOBLucJW57B4P6wdaM7+QRRjbOwVY0rFBVgJxgENGLnVo0No53g/xSLiRtCAkLqnI5XGrEC5jjRf1zPwHaMI=","qrXBxh8ppoAzm93gt7nD4h4EjPQCAStm68izgWJWEcESRiSjUBofbXRqsHyrN96dMhClLXk9eJx6Ppmc4jHiFpZrlOfMTmh3FmnTw7HuSbhxtA==","G5/8km54bM5B3Lfh4Vxz2Rf1TGrgFBnBJX9A9Irr06BjnG+su3JKAwZwBx4mQGysPm80+jO63R3g3+8nmx3fhmy33aq9ORs5k5hMARP+ogLLQhpXsQ==","87gkRFBfWrzS0Q+OJuPV6aMsCfnjpWIY5LZBpumENg7tC7UFvTl+zDafWoG5P/gyyWt4Jte9YzhiTxik0c/RdXxtzBPucSRD5iT/0vrqont9","P53ys54QxgeoUps2N4RZu25m3f/48Y45edKy8Y+Y9Ha50eSWF8W81tAYKJEuYs6y8r7i43O47Pq17Ln7bwVkBJWlnrrruJhHDc1plQAGZD3fAOzl","+WLJAGasUMIvZ5vS2qTYyvFYTsHRGPrwqOId/BRXwtzLkHSG0PU5QLnLGTi6hUoZvupi58nstCoqFvXR1+86M1CiQt+C0Y9Z82fDQqwaoVor2Ns=","JK2hanUHFDu4jR241MtwXhXvQNXv4j/dkAII94XTYPhy85Sh7TWQPiiuGpNAnbB32rGAH09fq0+2Cd40IC9Ixp1oI0K1bLkDCzfiYksRVQPz","/ScYWFJFYcrj7G0m/C6kba8y031UoXI4NWa/8T13RC2LcksWA4eDhZAt70SCzLJmyRJLtO5EvoONVPe1hztf/cUx49hZ9lGjAnWo+Qkm/sfRfHtUJEU=","wv+BQVhrIqtg1de2J/WpSL9A2ivxLYJ1+vao4mTyuO9graCSGs8wiRbj9xkMPsebxVGTDHFWNENCWzZhzkLBsLpOIow7Nm0OlPXHgNhb2/tsTbW0umrM","5if5JLXaRcVCorvHUnyz1aQ2DWMkzv+9rLkxngzIPW4aSM9P2a7iKJZadzRDoU2sf8rsHPyoSmgkIjWW1dwHn0B4QCfanOekJBxcn6Va7Qi6eQ==","JTjr95pOSnhhzpxvpSXZedy5fCDgxrgNVjE6a0geq3XW4CccPA8nZIWZwx7jqGun/SWK69hbCeGGhomd46SP6ZuYeoit9OjI00Zp3Kk7OQ==","jj2MmgKdvhUxs8ufb6/e8Lz/7Qe4m3Dy/CWHcc6Cj6R5ebwUhfs5OcpI8BJ6rB3IsJaopovIdSafIBUzIHCCfcRIeCpUKCXN1dcP","lPBovYtzGZuVJqzPXunlqmruprfwg1xuBlsSYTuOZON5/olVQui2R2mxeaeU15iyx5QHjq92UEmsw7l0cO1doL9HjbfiNGrp7X/3bA==","WUp0a3HrkG8Kil4WbCaubBFMy9SHWy2n/FRCtafvhNJXEODwSt9hY710/lrkbD90bclhjXQv9VmuOMYRUY8IGYItHgJOD1Rno6drERZK+BWJHQ==","X4o8ekxjpEhYzkNp6mbhIoDs8VbaoUMKlQbc3pkSv7bYkO/mbg7o0Dw0A2K81Zi1S+8Cw5ywEHQrx789k8nvIj2hqv1jPaDS/70T00jU7o6S","LEMeiPPHQmYC3GIi/uwIRi7QUWAWudxkjh3aqRZ91PZ/caCPjI16PzVWjmNXOoZZas4y8muWjiu2c+46FuOQkWbC8l96UkB+JcAwjxI/E8l5y8okdX5V","Y4kHMO/oeFy3b8XTR+huVVoWtPkZjUThMNOnIdl1hy2GdPhLfcLBlWBqzdq7ywxjSeLUfbcm8ilBG5N9XL1rHNVsj4MVG/vk+3NL6z0rloUFZso9TLQ=","cMbSng5THNj++et8iDSNJo8WRU2nlmpyY1zIDjJEgDdaHw70aAj5aE3ufkGBmqB/+He41AhCGnMd5KN/8SENBzjocWilpHLJDFEhWoSTkIYeSb9Rns/FNw=="];
+  const WRAPPED_MK = ["WU+cqT2CAecKIWctzczo1rSVZYN6/btt5dLzFXmz3h+C2kgGHdPaInfWTHB07BJWKIOBTGuYWFKy3wOPaHCP2RnIeC/eq+FK0lflpDY5","jetGCauMsrXMkoDDW6jAtlyKkAfDhCK3/TUeXzX9O8z3dIx8dGcKLEuf+XbTwnFrcLlUCgP6lG61cr685p0T1ozE5Ah3fP3reB81Rz+WvpU0yCY=","N6U0sDF4mZmE+gAj200nYjCwVmgx7FK3j5hXqgkCeUkDKIA/0MQJPMvH5A5pom3HaMiWktnStBGv8+eJ/FZdNPEICg/41g5xu45aCVzu33ky+ogBAkn1","8zM1L0RUpsKoAC98fBCsCo6jPk4RyCDHiCwumLwpMyzIsdTomc75NdMjaVlUCvsLhskyT2Uw/iHlNG1z7NnqYp6LMvFO9jo3XC0jCNcIXer3+vQeDJY=","2jDyaUcYwveIpP1ViD7yU9iEEUCKtyKIJb9zZqdzrWUcBy/5mkV/j5QyiM/kQQgoLe7cBiXCdSzeHQtL8AyI7m5hMg5ncuK++Pc8r28jiSM=","vUQ4FEymdfMi6aqJmn7eWPnWrxOT623uX1vKab7t529f6OY1fKyQO8iu1XF+iJjN3eTlPnLft0CY2Uh64G+SyRmWkGVs5A790K23OcLk1NTJ","m5Zmos58NFZWQ5bqz74A/yBvvL92Jia5UABroRE5cJK6c4cfquarxUGWc2yv5WyXVtSDgChgpc5SGIDbAbkfaTt25qw9GkyAl0V/nQEnKZ0W9Lw=","3mcQFTwdGa0QV/HAnB+7mBKkMJXC8dWrr36oVeCsS0bobqs/gB696pAuJR5GDybWJ4/jSITpJRYEcGo/oKI2bb6t3MtnWyC4RsnxM14MruDBQ9yG","vuUV7kGol2DCKIxhPHwe7a/gWkwPlYm/2UtUo/nIno9IWJlpQahXLkg7dlpw4WLZHTac4Qtl0B/EFwITPw5Xx3XbiC1zJmUJ5Y6jQiTz+TweQ2I=","ezfejckPLwzNLFWtJnsGY1lMb8fICBAwTcgARTHKR73FLn3i+ME1KoNE9Fb6JP14lVnjZN3gj83FoTxi1PaKmSsdPG3cvxfSkKlVTnIESGsZug==","0dr8WvDb051cr2HDADq1aBl7/2C3jKANUHSrFU+iRLwxIuDsMbdfDER/ag+y+7ROUTC2teaOfI92frQ1aB5g5ee5Ntyg9B6REUsEo17TDQRfrEkNcQ==","inV7bxMK8Kh/Ey/w0IFmdvWzo+6UgTCcr/XyhLo9hZS4zHCOByNI3fe4vBi73+6B1QMuct0o2PnQPmlw+yuuH5cj3z1eIIWqmBNfXib4Gba1","RgPsQFUqHRDP1tKF6XZZH9DCrMqGXmuTh/HtUHABD91O0AcHEmlgeFQlLDavdJ59waTCfmPx+DmpC7oDw331xuSboRF2lnxom41V34iaBEAuDH+g","XraGUZv5PH0c3/ZIiwsSTaimufZZKTkxtFCkC1T02w2MCexduNujh3p+4XoRDKXhIMcZdr2M80hVwwNbViyE8DpEQbtlLT1nt3aG+mVL7BJAmhM=","0sKz+mTWI3rWH5z/lhFaasQ0rxwO/fOwX/n8tfkyLbwo35N8sVrKtHfmuQ92GFIRGzvwH7o6UvygAnY6bHDoU7ZsKrclwWFnjYRWPs2Y4ws9","POxeVyyO4D8r7Gq79ISN0oNoNVTl9Eo1BMtKxc8iJNAV5XumIBOPj54bYxWeX62PvYH9zwvyrECMselIeIh83k41GdECClFGxiZc6QfHyijXXGf+XBk=","cksuomtBxy5NSaqe+ipElG5Y4xokORu3c2tv4/76QF1NSfO43kBkRQVSwdxxdFpxS/s8lzcq7GEi010xRPdlWbyxpO3V3krryU624ASXFpssjQUToqju","ShBWg6xBEWFROmk8a6faXiC0zM3pUgss20ECPuT6DWeeNs/9eKCNlP/EO/a0d4Gl/RNjjvrkPzn6DuiyCl9QSiObWbAAhOVLOVX1pWDKslGUCQ==","HDxeZolxLi+2MoXhQ45SQ/Gm9xklYI0ImkndKKhKiyQq+nudgEzOLEyflodiZJQXBQFvi26yMXWA26yLDahgRi3sdv1bgMCPlFlC0TcJGA==","ugZjYzTAO6kxwyFHCtYZzPDkcL//JzLCDJDpKjUXp34sCEwE1A+uczRuPjhu3HGwjw92kfuhtFGOhq/9L1W7/PaA5C3MY3XoDNu8","jhGN211aqJAfaw5Qjy0PFmEs6fdyaiYWWSgm2p59zemIy22xQjRpGj8fV0nWBtZ3Z1Im9BNay4LYIB3TEuTjdZmo3AMWnY0d0KTqgg==","PBXlTr2C8hbfvFgBhHDGPVmNHIxwk/N9cUwtqtlO38TLpMdf4Z70Gnuj546WJa0uoys1YVlY3zdCbo33YQhjGJMi7IGB7Hq262RV/a1cyGKjGw==","CJJMkSHd7fNJMCqL9lMDV4INurC1qPZrJAryWXWRS7deaFA7pqJV6h9UGxQLTNSBUmIZeuV6GtOgafRuIlgCw/9Ykb8guZRAY1fsYj7fajAd","0b3Ffz6sMdoIrHDgTE9g0zKNb7urr/yacAP40EajdCsLIo5XWaSgABxRqi5bNJLkioslfhx2gtw+wcR2fKCIRhm+XM7rpQcP08xIsJlEFSbqLwav91xx","kjl5v1elEqu3LUcK9wCjOG7IkyKcaCEG+pVa3uevezvhcTPR+cYx3fcMtCOQc00fQsQ8ELwh3vE4sji+Qg3W6HLpOJ+wgsNyaZZhwcXKNqezWToobmA=","sN7tDukhqoYbi/Vn8qFJ6nqd28GCPrKBPHWz3F6M+DmT/B6zbUspyIF8q5vqlm1xsRC5U7WZBlt+w/h0+LVT3vYDmw4/drLf1usqtBIELRK3JX8ZAcQRFw=="];
 
   function showAuthenticated() {
     const a = document.getElementById("loginSection");
@@ -44,10 +85,8 @@
   function showStatus(message, kind) {
     const el = document.getElementById("loginStatus");
     if (!el) return;
-    if (!message) { el.style.display = "none"; el.textContent = ""; return; }
-    el.style.display = "block";
-    el.style.color = kind === "error" ? "#c0392b" : kind === "success" ? "green" : "";
-    el.textContent = message;
+    el.textContent = message || "";
+    el.classList.toggle("pw-error", kind === "error");
   }
 
   async function ready() {

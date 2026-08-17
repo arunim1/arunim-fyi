@@ -1,11 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"><head><script src="/static/sodium.js" spa-preserve></script>
+<style spa-preserve>
+.pw-form { display: flex; gap: 8px; margin: 1.1rem 0 0.4rem; max-width: 26rem; }
+.pw-input {
+  flex: 1; min-width: 0; padding: 0.55rem 0.9rem;
+  font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--dark); background: var(--light);
+  border: 1px solid var(--lightgray); border-radius: 8px;
+  outline: none; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pw-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--secondary) 18%, transparent); }
+.pw-input::placeholder { color: var(--gray); }
+.pw-submit {
+  padding: 0.55rem 1.1rem; font-family: var(--bodyFont); font-size: 0.95rem;
+  color: var(--secondary); background: transparent;
+  border: 1px solid var(--secondary); border-radius: 8px; cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.pw-submit:hover { background: var(--highlight); }
+.pw-status { font-size: 0.88rem; min-height: 1.2em; margin: 0.2rem 0 0; color: var(--gray); }
+.pw-status.pw-error { color: var(--secondary); font-weight: 500; }
+.pw-locked { margin: 1.4rem 0; }
+.pw-locked-sub { font-size: 0.92rem; color: var(--gray); margin: 0.4rem 0 0; }
+.pw-mirage { text-align: center; margin: 0 0 1.4rem; }
+.pw-mirage img { max-width: 55%; height: auto; opacity: 0.9; }
+.pw-mirage i { display: block; color: var(--gray); font-size: 0.95rem; margin-bottom: 0.4rem; }
+.pw-expired {
+  margin: 0 0 1rem; padding: 0.7rem 0.9rem;
+  border: 1px solid var(--lightgray); border-left: 3px solid var(--secondary);
+  border-radius: 6px; background: var(--highlight);
+  font-size: 0.92rem; color: var(--dark);
+}
+.share-popup-card {
+  background: var(--light); color: var(--dark);
+  max-width: 420px; margin: 16px; padding: 22px 24px;
+  border: 1px solid var(--lightgray); border-radius: 10px;
+  font-family: var(--bodyFont); font-size: 0.95rem; line-height: 1.55;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+}
+.share-popup-card button { font-family: var(--bodyFont); font-size: 0.9rem; border-radius: 7px; cursor: pointer; padding: 6px 12px; }
+.share-popup-card .share-cancel { background: transparent; color: var(--dark); border: 1px solid var(--lightgray); }
+.share-popup-card .share-confirm { background: var(--secondary); color: var(--light); border: 1px solid var(--secondary); }
+.share-popup-card .share-confirm:hover { background: var(--tertiary); border-color: var(--tertiary); }
+.share-signoff {
+  font-family: biro_script_standardRgus, var(--bodyFont);
+  text-align: right; font-size: 1.3rem; color: var(--dark); margin: 4px 0 14px;
+}
+</style>
 <script spa-preserve>
 (function () {
   const GLOBAL_SALT_B64 = "xKonxQVtHr6bJ5FAqhuqQg==";
-  const WRAPPED_MK = ["RPA0nVnPF/zjj9CiUKMhTd5nwSDcbRotR/VsszGmgUd8rvpDeQBj0lPRSnwUupbBV08kFPf0uENbk/wG7rluAFLgt+OFcwGQNaKbgyeZ","/dWBvlWTaHc4QnKDVZzyOHZTTgCakSoWrzYiZ9jVgY7yeYthQBhbbqHiBP2/kItSYgdE4ZedDhqCooPgXN2ffObt5YiDxtjF2xyJxqjiAmGF8T0=","ho7Np++F5SAyF4DS/vOxZbrut5mS/NpjvamLx6r/LbsHuNKJBCz+RjGhf1WpRVbTWhATugvrW028Ai5ScrWicGQBt2IQGm2iJieQAYHoETdeZLL+wJRb","rbkDSzJOkuHT26tzV6dqxIvJ83TGlvonKm8Qtg2bmVsKl5yZQbEPzJdKyyT5Ab1nxYTd9hsPIbKdfkLmpluERVilA1txON0+/VRVcrQy60YVi3ma51k=","OIYdUlZJQWyATJypUx5+cWCtuMIJI08LQxwtVcx3EIwjVsAW/Uv5tAAYZgs6bl2WD3HA3MekB78AEVxZLUK83BpVhe3ncu3hYBxUYHqn2V8=","98yVgjXkIiL3U9PX0mZrxKenJNStgbUzyTGZH7SrtP5d3h8AUmfKBRdBzZxYrhlf2iczfp7lnaqZFTkvbh02hfs2yjFIfgFp5In/piQFosRH","qtS4LG6/92DKpYVqeuXsFsGCqxLlubfrj8Epv+6ev02ApDughon0GU6S0S5g+pp39VpkzYylpmiNCS1r4ZeSNQ3Uif8ee0LSkhOSiBSSdm7afyw=","vsdApVuJ9biQBt3Zy3S11/tjOB8RWA2NJoW1Bo1XI9krtwZOw4PAntyPe4NsM2Td1SIA/cLaAhGMr31ncqq2UK22paievSDdncUhaXkKX+bW2H86","iddNxZNQuDw3U6WjacB5fY0kmrEgOBLucJW57B4P6wdaM7+QRRjbOwVY0rFBVgJxgENGLnVo0No53g/xSLiRtCAkLqnI5XGrEC5jjRf1zPwHaMI=","qrXBxh8ppoAzm93gt7nD4h4EjPQCAStm68izgWJWEcESRiSjUBofbXRqsHyrN96dMhClLXk9eJx6Ppmc4jHiFpZrlOfMTmh3FmnTw7HuSbhxtA==","G5/8km54bM5B3Lfh4Vxz2Rf1TGrgFBnBJX9A9Irr06BjnG+su3JKAwZwBx4mQGysPm80+jO63R3g3+8nmx3fhmy33aq9ORs5k5hMARP+ogLLQhpXsQ==","87gkRFBfWrzS0Q+OJuPV6aMsCfnjpWIY5LZBpumENg7tC7UFvTl+zDafWoG5P/gyyWt4Jte9YzhiTxik0c/RdXxtzBPucSRD5iT/0vrqont9","P53ys54QxgeoUps2N4RZu25m3f/48Y45edKy8Y+Y9Ha50eSWF8W81tAYKJEuYs6y8r7i43O47Pq17Ln7bwVkBJWlnrrruJhHDc1plQAGZD3fAOzl","+WLJAGasUMIvZ5vS2qTYyvFYTsHRGPrwqOId/BRXwtzLkHSG0PU5QLnLGTi6hUoZvupi58nstCoqFvXR1+86M1CiQt+C0Y9Z82fDQqwaoVor2Ns=","JK2hanUHFDu4jR241MtwXhXvQNXv4j/dkAII94XTYPhy85Sh7TWQPiiuGpNAnbB32rGAH09fq0+2Cd40IC9Ixp1oI0K1bLkDCzfiYksRVQPz","/ScYWFJFYcrj7G0m/C6kba8y031UoXI4NWa/8T13RC2LcksWA4eDhZAt70SCzLJmyRJLtO5EvoONVPe1hztf/cUx49hZ9lGjAnWo+Qkm/sfRfHtUJEU=","wv+BQVhrIqtg1de2J/WpSL9A2ivxLYJ1+vao4mTyuO9graCSGs8wiRbj9xkMPsebxVGTDHFWNENCWzZhzkLBsLpOIow7Nm0OlPXHgNhb2/tsTbW0umrM","5if5JLXaRcVCorvHUnyz1aQ2DWMkzv+9rLkxngzIPW4aSM9P2a7iKJZadzRDoU2sf8rsHPyoSmgkIjWW1dwHn0B4QCfanOekJBxcn6Va7Qi6eQ==","JTjr95pOSnhhzpxvpSXZedy5fCDgxrgNVjE6a0geq3XW4CccPA8nZIWZwx7jqGun/SWK69hbCeGGhomd46SP6ZuYeoit9OjI00Zp3Kk7OQ==","jj2MmgKdvhUxs8ufb6/e8Lz/7Qe4m3Dy/CWHcc6Cj6R5ebwUhfs5OcpI8BJ6rB3IsJaopovIdSafIBUzIHCCfcRIeCpUKCXN1dcP","lPBovYtzGZuVJqzPXunlqmruprfwg1xuBlsSYTuOZON5/olVQui2R2mxeaeU15iyx5QHjq92UEmsw7l0cO1doL9HjbfiNGrp7X/3bA==","WUp0a3HrkG8Kil4WbCaubBFMy9SHWy2n/FRCtafvhNJXEODwSt9hY710/lrkbD90bclhjXQv9VmuOMYRUY8IGYItHgJOD1Rno6drERZK+BWJHQ==","X4o8ekxjpEhYzkNp6mbhIoDs8VbaoUMKlQbc3pkSv7bYkO/mbg7o0Dw0A2K81Zi1S+8Cw5ywEHQrx789k8nvIj2hqv1jPaDS/70T00jU7o6S","LEMeiPPHQmYC3GIi/uwIRi7QUWAWudxkjh3aqRZ91PZ/caCPjI16PzVWjmNXOoZZas4y8muWjiu2c+46FuOQkWbC8l96UkB+JcAwjxI/E8l5y8okdX5V","Y4kHMO/oeFy3b8XTR+huVVoWtPkZjUThMNOnIdl1hy2GdPhLfcLBlWBqzdq7ywxjSeLUfbcm8ilBG5N9XL1rHNVsj4MVG/vk+3NL6z0rloUFZso9TLQ=","cMbSng5THNj++et8iDSNJo8WRU2nlmpyY1zIDjJEgDdaHw70aAj5aE3ufkGBmqB/+He41AhCGnMd5KN/8SENBzjocWilpHLJDFEhWoSTkIYeSb9Rns/FNw=="];
+  const WRAPPED_MK = ["WU+cqT2CAecKIWctzczo1rSVZYN6/btt5dLzFXmz3h+C2kgGHdPaInfWTHB07BJWKIOBTGuYWFKy3wOPaHCP2RnIeC/eq+FK0lflpDY5","jetGCauMsrXMkoDDW6jAtlyKkAfDhCK3/TUeXzX9O8z3dIx8dGcKLEuf+XbTwnFrcLlUCgP6lG61cr685p0T1ozE5Ah3fP3reB81Rz+WvpU0yCY=","N6U0sDF4mZmE+gAj200nYjCwVmgx7FK3j5hXqgkCeUkDKIA/0MQJPMvH5A5pom3HaMiWktnStBGv8+eJ/FZdNPEICg/41g5xu45aCVzu33ky+ogBAkn1","8zM1L0RUpsKoAC98fBCsCo6jPk4RyCDHiCwumLwpMyzIsdTomc75NdMjaVlUCvsLhskyT2Uw/iHlNG1z7NnqYp6LMvFO9jo3XC0jCNcIXer3+vQeDJY=","2jDyaUcYwveIpP1ViD7yU9iEEUCKtyKIJb9zZqdzrWUcBy/5mkV/j5QyiM/kQQgoLe7cBiXCdSzeHQtL8AyI7m5hMg5ncuK++Pc8r28jiSM=","vUQ4FEymdfMi6aqJmn7eWPnWrxOT623uX1vKab7t529f6OY1fKyQO8iu1XF+iJjN3eTlPnLft0CY2Uh64G+SyRmWkGVs5A790K23OcLk1NTJ","m5Zmos58NFZWQ5bqz74A/yBvvL92Jia5UABroRE5cJK6c4cfquarxUGWc2yv5WyXVtSDgChgpc5SGIDbAbkfaTt25qw9GkyAl0V/nQEnKZ0W9Lw=","3mcQFTwdGa0QV/HAnB+7mBKkMJXC8dWrr36oVeCsS0bobqs/gB696pAuJR5GDybWJ4/jSITpJRYEcGo/oKI2bb6t3MtnWyC4RsnxM14MruDBQ9yG","vuUV7kGol2DCKIxhPHwe7a/gWkwPlYm/2UtUo/nIno9IWJlpQahXLkg7dlpw4WLZHTac4Qtl0B/EFwITPw5Xx3XbiC1zJmUJ5Y6jQiTz+TweQ2I=","ezfejckPLwzNLFWtJnsGY1lMb8fICBAwTcgARTHKR73FLn3i+ME1KoNE9Fb6JP14lVnjZN3gj83FoTxi1PaKmSsdPG3cvxfSkKlVTnIESGsZug==","0dr8WvDb051cr2HDADq1aBl7/2C3jKANUHSrFU+iRLwxIuDsMbdfDER/ag+y+7ROUTC2teaOfI92frQ1aB5g5ee5Ntyg9B6REUsEo17TDQRfrEkNcQ==","inV7bxMK8Kh/Ey/w0IFmdvWzo+6UgTCcr/XyhLo9hZS4zHCOByNI3fe4vBi73+6B1QMuct0o2PnQPmlw+yuuH5cj3z1eIIWqmBNfXib4Gba1","RgPsQFUqHRDP1tKF6XZZH9DCrMqGXmuTh/HtUHABD91O0AcHEmlgeFQlLDavdJ59waTCfmPx+DmpC7oDw331xuSboRF2lnxom41V34iaBEAuDH+g","XraGUZv5PH0c3/ZIiwsSTaimufZZKTkxtFCkC1T02w2MCexduNujh3p+4XoRDKXhIMcZdr2M80hVwwNbViyE8DpEQbtlLT1nt3aG+mVL7BJAmhM=","0sKz+mTWI3rWH5z/lhFaasQ0rxwO/fOwX/n8tfkyLbwo35N8sVrKtHfmuQ92GFIRGzvwH7o6UvygAnY6bHDoU7ZsKrclwWFnjYRWPs2Y4ws9","POxeVyyO4D8r7Gq79ISN0oNoNVTl9Eo1BMtKxc8iJNAV5XumIBOPj54bYxWeX62PvYH9zwvyrECMselIeIh83k41GdECClFGxiZc6QfHyijXXGf+XBk=","cksuomtBxy5NSaqe+ipElG5Y4xokORu3c2tv4/76QF1NSfO43kBkRQVSwdxxdFpxS/s8lzcq7GEi010xRPdlWbyxpO3V3krryU624ASXFpssjQUToqju","ShBWg6xBEWFROmk8a6faXiC0zM3pUgss20ECPuT6DWeeNs/9eKCNlP/EO/a0d4Gl/RNjjvrkPzn6DuiyCl9QSiObWbAAhOVLOVX1pWDKslGUCQ==","HDxeZolxLi+2MoXhQ45SQ/Gm9xklYI0ImkndKKhKiyQq+nudgEzOLEyflodiZJQXBQFvi26yMXWA26yLDahgRi3sdv1bgMCPlFlC0TcJGA==","ugZjYzTAO6kxwyFHCtYZzPDkcL//JzLCDJDpKjUXp34sCEwE1A+uczRuPjhu3HGwjw92kfuhtFGOhq/9L1W7/PaA5C3MY3XoDNu8","jhGN211aqJAfaw5Qjy0PFmEs6fdyaiYWWSgm2p59zemIy22xQjRpGj8fV0nWBtZ3Z1Im9BNay4LYIB3TEuTjdZmo3AMWnY0d0KTqgg==","PBXlTr2C8hbfvFgBhHDGPVmNHIxwk/N9cUwtqtlO38TLpMdf4Z70Gnuj546WJa0uoys1YVlY3zdCbo33YQhjGJMi7IGB7Hq262RV/a1cyGKjGw==","CJJMkSHd7fNJMCqL9lMDV4INurC1qPZrJAryWXWRS7deaFA7pqJV6h9UGxQLTNSBUmIZeuV6GtOgafRuIlgCw/9Ykb8guZRAY1fsYj7fajAd","0b3Ffz6sMdoIrHDgTE9g0zKNb7urr/yacAP40EajdCsLIo5XWaSgABxRqi5bNJLkioslfhx2gtw+wcR2fKCIRhm+XM7rpQcP08xIsJlEFSbqLwav91xx","kjl5v1elEqu3LUcK9wCjOG7IkyKcaCEG+pVa3uevezvhcTPR+cYx3fcMtCOQc00fQsQ8ELwh3vE4sji+Qg3W6HLpOJ+wgsNyaZZhwcXKNqezWToobmA=","sN7tDukhqoYbi/Vn8qFJ6nqd28GCPrKBPHWz3F6M+DmT/B6zbUspyIF8q5vqlm1xsRC5U7WZBlt+w/h0+LVT3vYDmw4/drLf1usqtBIELRK3JX8ZAcQRFw=="];
   const TTL_MS = 600000;
-  const VERSION = "2";
+  const VERSION = "3";
 
   // One-shot migration: clear stale entries from old crypto-js scheme.
   if (localStorage.getItem("crypto_version") !== VERSION) {
@@ -109,36 +156,233 @@
     return mk;
   }
 
+  // ------------------------------------------------------------------
+  // Share-link grants: per-slug page keys handed out via #k= fragments.
+  // Stored in localStorage.shareGrants = { "<slug>": "<b64url key>" }.
+  // No TTL bookkeeping — a grant dies naturally when the site re-keys
+  // (epoch rollover / revoke) and its decrypt starts failing; we prune then.
+  // ------------------------------------------------------------------
+  function loadGrants() {
+    try { return JSON.parse(localStorage.getItem("shareGrants") || "{}"); }
+    catch (_) { return {}; }
+  }
+  function saveGrants(g) { localStorage.setItem("shareGrants", JSON.stringify(g)); }
+
+  // Parse a #k= fragment once at startup, before anything can clobber it.
+  let fragmentKeyB64 = null;
+  if ((location.hash || "").startsWith("#k=")) {
+    fragmentKeyB64 = location.hash.slice(3);
+  }
+  function fragmentKeyBytes() {
+    if (!fragmentKeyB64) return null;
+    try { return sodium.from_base64(fragmentKeyB64, sodium.base64_variants.URLSAFE_NO_PADDING); }
+    catch (_) { return null; }
+  }
+  function stripFragment() {
+    if ((location.hash || "").startsWith("#k=")) {
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+    fragmentKeyB64 = null;
+  }
+
+  function showExpiredMessage(article) {
+    if (article.dataset.expiredShown) return;
+    if (article.closest(".popover") || article.closest(".search-layout")) return;
+    const msg = article.querySelector(".encrypted-message");
+    if (!msg) return;
+    article.dataset.expiredShown = "1";
+    const div = document.createElement("div");
+    div.className = "pw-expired";
+    div.textContent = "Looks like that key has expired or is invalid — consider asking me for access again. Keys expire and rotate every couple of months.";
+    msg.insertBefore(div, msg.firstChild);
+  }
+
+  // --- in-place passphrase login on locked pages --------------------------
+  // The locked placeholder carries a .pw-form; one delegated handler serves
+  // every private page (and survives SPA navigations — it's on document).
+  // Success = same storage the homepage login writes, so it unlocks the
+  // whole site, then decrypts this page in place. No redirect.
+  document.addEventListener("submit", async (e) => {
+    const form = e.target;
+    if (!form || !form.classList || !form.classList.contains("pw-form")) return;
+    e.preventDefault();
+    const input = form.querySelector(".pw-input");
+    const status = form.parentElement.querySelector(".pw-status");
+    const setStatus = (text, isError) => {
+      if (!status) return;
+      status.textContent = text;
+      status.classList.toggle("pw-error", !!isError);
+    };
+    const passphrase = input && input.value;
+    if (!passphrase) { setStatus("Please enter your password.", true); return; }
+    setStatus("Checking…", false);
+    await ready();
+    try {
+      const KEK = await deriveKEK(passphrase);
+      const mk = unwrapMasterKey(KEK);
+      if (!mk) {
+        setStatus("That password didn't work. Try again.", true);
+        return;
+      }
+      localStorage.setItem("userPassword", passphrase);
+      storeMasterKey(mk);
+      setStatus("", false);
+      await decryptVisibleArticles(false);
+    } catch (err) {
+      setStatus("Something went wrong — try refreshing the page.", true);
+    }
+  });
+
+  // --- copy-share-link affordance ------------------------------------------
+  // Sits on the date/reading-time line (content-meta, outside the sealed
+  // article), right-aligned — same place the plain copy button lives on
+  // public pages. Only injected for passphrase holders: share-link visitors
+  // get no button, so sharing stays one degree deep (Arunim's spec).
+  function injectShareButton(article, pageKey) {
+    if (article.closest(".popover") || article.closest(".search-layout")) return;
+    const slug = article.getAttribute("data-slug");
+    if (!slug) return;
+    const meta = document.querySelector(".center p.content-meta") || document.querySelector("p.content-meta");
+    if (!meta || meta.querySelector(".share-link-btn")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "share-link-btn";
+    btn.textContent = "share";
+    btn.title = "Create a link that unlocks just this page";
+    btn.addEventListener("click", () => showSharePopup(slug, pageKey));
+    meta.appendChild(btn);
+  }
+
+  function showSharePopup(slug, pageKey) {
+    const existing = document.getElementById("share-popup-overlay");
+    if (existing) existing.remove();
+    const overlay = document.createElement("div");
+    overlay.id = "share-popup-overlay";
+    overlay.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;display:flex;align-items:center;justify-content:center;";
+    const card = document.createElement("div");
+    card.className = "share-popup-card";
+    card.innerHTML =
+      '<p style="margin:0 0 10px;"><strong>This page is private.</strong></p>' +
+      '<p style="margin:0 0 4px;">Please share it carefully and only with people you trust. Links expire and rotate every couple of months.</p>' +
+      '<p class="share-signoff">Arunim</p>' +
+      '<div style="display:flex;gap:10px;justify-content:flex-end;">' +
+      '<button type="button" class="share-cancel">Cancel</button>' +
+      '<button type="button" class="share-confirm">Create and copy link</button>' +
+      "</div>";
+    overlay.appendChild(card);
+    overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.remove(); });
+    card.querySelector(".share-cancel").addEventListener("click", () => overlay.remove());
+    card.querySelector(".share-confirm").addEventListener("click", async (e) => {
+      const link =
+        location.origin + "/" + encodeURI(slug) + "#k=" +
+        sodium.to_base64(pageKey, sodium.base64_variants.URLSAFE_NO_PADDING);
+      try { await navigator.clipboard.writeText(link); } catch (_) {
+        // Clipboard API unavailable (e.g. non-HTTPS) — show the link instead.
+        window.prompt("Copy this link:", link);
+      }
+      e.target.textContent = "Copied ✓";
+      setTimeout(() => overlay.remove(), 900);
+    });
+    document.body.appendChild(overlay);
+  }
+
+  // Resolve + decrypt every sealed article. Per article, keys are tried in
+  // order: master-key unwrap of data-wk (friends), stored grant for its slug,
+  // then the #k= fragment (first visit via a share link).
   async function decryptVisibleArticles(forceRegenerate) {
     await ready();
     const mk = await authenticateAndGetMasterKey(forceRegenerate);
-    if (!mk) return false;
 
     let any = false;
+    let masterFailed = false;
     const decryptedArticles = [];
     document.querySelectorAll("article.encrypted").forEach((article) => {
       const blobEl = article.querySelector(".encrypted-content");
       if (!blobEl) return;
-      try {
-        const blob = (blobEl.textContent || "").trim();
-        if (!blob) return;
-        const plain = aeadOpen(blob, mk);
-        const html = sodium.to_string(plain);
-        article.innerHTML = html;
-        article.classList.remove("encrypted");
-        article.classList.add("decrypted");
-        decryptedArticles.push(article);
-        any = true;
-      } catch (e) {
-        // Wrong key (e.g., master key rotated) — caller can retry with forceRegenerate.
+      const blob = (blobEl.textContent || "").trim();
+      if (!blob) return;
+      const slug = article.getAttribute("data-slug");
+      const wk = article.getAttribute("data-wk");
+
+      let plain = null;
+      let usedKey = null;
+      let viaMaster = false;
+
+      // 1. Friend path: unwrap this page's key with the master key.
+      if (mk && wk) {
+        try {
+          const pageKey = aeadOpen(wk, mk);
+          plain = aeadOpen(blob, pageKey);
+          usedKey = pageKey;
+          viaMaster = true;
+        } catch (_) {
+          // Master key stale (rotated) — caller may retry with forceRegenerate.
+          masterFailed = true;
+        }
       }
+
+      // 2. Stored grant from a past share link.
+      if (!plain && slug) {
+        const grants = loadGrants();
+        if (grants[slug]) {
+          try {
+            const k = sodium.from_base64(grants[slug], sodium.base64_variants.URLSAFE_NO_PADDING);
+            plain = aeadOpen(blob, k);
+            usedKey = k;
+          } catch (_) {
+            // Grant went stale (epoch rollover / revoke) — prune + explain.
+            delete grants[slug];
+            saveGrants(grants);
+            showExpiredMessage(article);
+          }
+        }
+      }
+
+      // 3. First visit via a share link: the fragment IS the page key.
+      if (!plain && fragmentKeyB64) {
+        const k = fragmentKeyBytes();
+        if (k) {
+          try {
+            plain = aeadOpen(blob, k);
+            usedKey = k;
+            if (slug) {
+              const grants = loadGrants();
+              grants[slug] = fragmentKeyB64;
+              saveGrants(grants);
+            }
+            stripFragment();
+          } catch (_) {
+            showExpiredMessage(article);
+          }
+        } else {
+          showExpiredMessage(article);
+        }
+      }
+
+      if (!plain) return;
+      article.innerHTML = sodium.to_string(plain);
+      article.classList.remove("encrypted");
+      article.classList.add("decrypted");
+      // Passphrase holders can mint links; share-link visitors cannot
+      // (one degree of sharing).
+      if (viaMaster) injectShareButton(article, usedKey);
+      decryptedArticles.push(article);
+      any = true;
+      // Consume the fragment on ANY successful decrypt — a logged-in friend
+      // opening a share link would otherwise keep a live page key sitting in
+      // their address bar, exactly the copy/paste leak the strip exists to
+      // prevent (review finding #6).
+      if (fragmentKeyB64) stripFragment();
     });
-    // After unsealing pages, walk for ".enc" asset refs and decrypt those too.
-    // Fire and forget — images appear progressively as fetches return.
+
+    // After unsealing pages, decrypt ".enc" asset refs with the per-asset
+    // keys embedded inside each page's sealed body. Fire and forget — images
+    // appear progressively as fetches return.
     for (const article of decryptedArticles) {
-      decryptAssetRefsIn(article, mk).catch(() => {});
+      decryptAssetRefsIn(article, readAssetKeys(article)).catch(() => {});
     }
-    return any;
+    // Signal a retry only when the master path specifically looks stale.
+    return any || !masterFailed;
   }
 
   // Inlined here (rather than imported) so the IIFE is self-sufficient and
@@ -157,7 +401,24 @@
     return ASSET_MIME[ext] || "application/octet-stream";
   }
 
-  async function decryptAssetRefsIn(root, masterKey) {
+  // Per-asset keys ride inside each page's sealed body as a JSON map keyed by
+  // "assets/<name>.enc" (see the build emitter). Read it post-decrypt.
+  function readAssetKeys(root) {
+    const el = root.querySelector("script.asset-keys");
+    if (!el) return {};
+    try { return JSON.parse(el.textContent || "{}"); } catch (_) { return {}; }
+  }
+
+  function assetKeyForUrl(assetKeys, rawUrl) {
+    const m = rawUrl.match(/assets\/.+\.enc$/);
+    if (!m) return null;
+    const b64 = assetKeys[m[0]];
+    if (!b64) return null;
+    try { return sodium.from_base64(b64, sodium.base64_variants.ORIGINAL); }
+    catch (_) { return null; }
+  }
+
+  async function decryptAssetRefsIn(root, assetKeys) {
     if (!window.__quartzAssetCache) window.__quartzAssetCache = new Map();
     const cache = window.__quartzAssetCache;
     const els = root.querySelectorAll(ENC_SELECTORS);
@@ -167,13 +428,15 @@
       if (!raw) return;
       const cached = cache.get(raw);
       if (cached) { el.setAttribute(attr, cached); return; }
+      const assetKey = assetKeyForUrl(assetKeys, raw);
+      if (!assetKey) return;
       try {
         const resp = await fetch(raw);
         if (!resp.ok) return;
         const enc = new Uint8Array(await resp.arrayBuffer());
         const nonce = enc.slice(0, 24);
         const cipher = enc.slice(24);
-        const plain = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(null, cipher, null, nonce, masterKey);
+        const plain = sodium.crypto_aead_xchacha20poly1305_ietf_decrypt(null, cipher, null, nonce, assetKey);
         const origUrl = raw.replace(/\.enc$/, "");
         const blob = new Blob([plain], { type: mimeFromUrl(origUrl) });
         const blobUrl = URL.createObjectURL(blob);
@@ -185,6 +448,7 @@
     }));
   }
   window.quartzDecryptAssets = decryptAssetRefsIn;
+  window.quartzReadAssetKeys = readAssetKeys;
 
   window.quartzDecrypt = async function () {
     if (!(await decryptVisibleArticles(false))) {
@@ -213,7 +477,7 @@
     startup();
   }
 })();
-</script><title>morale - arunim.fyi</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono&amp;family=DM Serif Display:wght@400;700&amp;family=Bricolage Grotesque:ital,wght@0,350;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="canonical" href="https://arunim.fyi/morale"/><meta name="robots" content="noindex, follow"/><meta property="og:title" content="morale"/><meta property="og:description" content="This page is locked."/><meta property="og:type" content="article"/><meta property="og:url" content="https://arunim.fyi/morale"/><meta property="og:site_name" content="arunim.fyi"/><meta property="og:locale" content="en_US"/><meta property="og:image" content="https://arunim.fyi/static/og-image.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="morale"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="morale"/><meta name="twitter:description" content="This page is locked."/><meta name="twitter:image" content="https://arunim.fyi/static/og-image.png"/><meta name="twitter:image:alt" content="morale"/><link rel="icon" type="image/svg+xml" href="./static/icon.svg"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" href="./static/favicon-32.png"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" href="./static/favicon-32-dark.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="./static/favicon-16.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="./static/favicon-16-dark.png"/><meta name="description" content="This page is locked."/><link rel="alternate" type="application/rss+xml" title="arunim.fyi" href="https://arunim.fyi/index.xml"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="default"/><meta name="apple-mobile-web-app-title" content="The Garden"/><link rel="apple-touch-icon" href="./static/apple-touch-icon.png"/><link rel="manifest" href="./static/manifest.json"/><meta name="generator" content="Quartz"/><meta name="quartz-visibility" content="private"/><link href="./static/font/font-style.css" rel="stylesheet" type="text/css" spa-preserve/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("./static/contentIndex.json").then(data => data.json())</script></head><body data-slug="morale"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href=".">arunim.fyi</a></h2><div class="spacer mobile-only"></div><div class="search"><button class="search-button" id="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div id="search-container"><div id="search-space"><input type="search" autocomplete="off" id="search-bar" name="search" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><button class="darkmode" id="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="autoIcon" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24" xml:space="preserve" aria-label="Device mode"><title>Device mode</title><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l18 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="./">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>morale</a></div></nav><h1 class="article-title">morale</h1><p show-comma="true" class="content-meta"><span>Sep 20, 2024 – Jan 19, 2026</span><span>2 min read</span></p><ul class="tags"><li><a href="./tags/guzey" class="internal tag-link">guzey</a></li></ul></div></div><article class="popover-hint encrypted"><div class="encrypted-message"><p style="margin-left: 0%;">🔒 This page is locked. Return to <a href="/">the Garden</a> and enter a password.<br></br><i style="display: block; text-align: center;">Nothing but a mirage ahead...</i><div style="text-align: center;"><img src="./static/mirage.jpg" alt="404 Illustration" style="max-width: 60%; height: auto;" /></div></p></div><div class="encrypted-content" style="display: none;">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</div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[&quot;root-directory&quot;],&quot;focusOnHover&quot;:false}"></div><button id="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+</script><title>morale - arunim.fyi</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono&amp;family=DM Serif Display:wght@400;700&amp;family=Bricolage Grotesque:ital,wght@0,350;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="canonical" href="https://arunim.fyi/morale"/><meta name="robots" content="noindex, follow"/><meta property="og:title" content="morale"/><meta property="og:description" content="This page is locked."/><meta property="og:type" content="article"/><meta property="og:url" content="https://arunim.fyi/morale"/><meta property="og:site_name" content="arunim.fyi"/><meta property="og:locale" content="en_US"/><meta property="og:image" content="https://arunim.fyi/static/og-image.png"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="morale"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="morale"/><meta name="twitter:description" content="This page is locked."/><meta name="twitter:image" content="https://arunim.fyi/static/og-image.png"/><meta name="twitter:image:alt" content="morale"/><link rel="icon" type="image/svg+xml" href="./static/icon.svg"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: light)" href="./static/favicon-32.png"/><link rel="icon" type="image/png" sizes="32x32" media="(prefers-color-scheme: dark)" href="./static/favicon-32-dark.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: light)" href="./static/favicon-16.png"/><link rel="icon" type="image/png" sizes="16x16" media="(prefers-color-scheme: dark)" href="./static/favicon-16-dark.png"/><meta name="description" content="This page is locked."/><link rel="alternate" type="application/rss+xml" title="arunim.fyi" href="https://arunim.fyi/index.xml"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="default"/><meta name="apple-mobile-web-app-title" content="The Garden"/><link rel="apple-touch-icon" href="./static/apple-touch-icon.png"/><link rel="manifest" href="./static/manifest.json"/><meta name="generator" content="Quartz"/><meta name="quartz-visibility" content="private"/><link href="./static/font/font-style.css" rel="stylesheet" type="text/css" spa-preserve/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("./static/contentIndex.json").then(data => data.json())</script></head><body data-slug="morale"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h2 class="page-title"><a href=".">arunim.fyi</a></h2><div class="spacer mobile-only"></div><div class="search"><button class="search-button" id="search-button"><p>Search</p><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title>Search</title><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></button><div id="search-container"><div id="search-space"><input type="search" autocomplete="off" id="search-bar" name="search" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><button class="darkmode" id="darkmode"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve" aria-label="Dark mode"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve" aria-label="Light mode"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="autoIcon" x="0px" y="0px" viewBox="0 0 24 24" style="enable-background:new 0 0 24 24" xml:space="preserve" aria-label="Device mode"><title>Device mode</title><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M3 19l18 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div><div class="center"><div class="page-header"><div class="popover-hint"><nav class="breadcrumb-container" aria-label="breadcrumbs"><div class="breadcrumb-element"><a href="./">Home</a><p> ❯ </p></div><div class="breadcrumb-element"><a href>morale</a></div></nav><h1 class="article-title">morale</h1><p show-comma="true" class="content-meta"><span>Sep 20, 2024 – Jan 19, 2026</span><span>2 min read</span></p><ul class="tags"><li><a href="./tags/guzey" class="internal tag-link">guzey</a></li></ul></div></div><article class="popover-hint encrypted" data-slug="morale" data-wk="78G6ZZ+sU1KN45DI4VEdqzrprhhEMwxt2P1DFws8p2xAM8BPsljUji53HRxPSHM3aNxv1vvTFY0I2um67tkRdl4t4s5bUdFt"><div class="encrypted-message pw-locked"><div class="pw-mirage"><i>Nothing but a mirage ahead... This page is locked 🔒</i><img src="./static/mirage.jpg" alt="Mirage illustration" /></div><form class="pw-form"><input type="password" class="pw-input" placeholder="passphrase" autocomplete="current-password" aria-label="passphrase"><button type="submit" class="pw-submit">unlock</button></form><div class="pw-status" role="status" aria-live="polite"></div><div class="pw-locked-sub">If you're still seeing this after logging in, try refreshing the page.</div></div><div class="encrypted-content" style="display: none;">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</div></article><hr/><div class="page-footer"></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[&quot;root-directory&quot;],&quot;focusOnHover&quot;:false}"></div><button id="global-graph-icon" aria-label="Global Graph"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
                 s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
                 c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
                 C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
