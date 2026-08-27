@@ -6,6 +6,12 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>pareto</title>
+    <link>https://arunim.fyi/pareto</link>
+    <guid>https://arunim.fyi/pareto</guid>
+    <description>I’m a huge fan of the set of concepts named after Vilfredo Pareto. I know nearly nothing about the man himself, but a quick skim of his Wikipedia page suggests that he had some vague visions which were correct, but maybe didn’t quite nail the terminology/definitions himself.</description>
+    <pubDate>Thu, 27 Aug 2026 18:30:04 GMT</pubDate>
+  </item><item>
     <title>index</title>
     <link>https://arunim.fyi/</link>
     <guid>https://arunim.fyi/</guid>
@@ -59,12 +65,6 @@
     <guid>https://arunim.fyi/RSI</guid>
     <description>Defining RSI What is RSI?? I think it means that humans exit the loop of AI development. But like … how much? It could be the case that humans are cheaper than automated alternatives for a large variety of physical labor for some time.</description>
     <pubDate>Fri, 24 Jul 2026 18:30:08 GMT</pubDate>
-  </item><item>
-    <title>Utility Engineering</title>
-    <link>https://arunim.fyi/Utility-Engineering</link>
-    <guid>https://arunim.fyi/Utility-Engineering</guid>
-    <description>www.emergent-values.ai/ arxiv.org/abs/2502.08640 As AIs rapidly advance and become more agentic, the risk they pose is governed not only by their capabilities but increasingly ...</description>
-    <pubDate>Fri, 24 Jul 2026 02:20:42 GMT</pubDate>
   </item>
     </channel>
   </rss>
