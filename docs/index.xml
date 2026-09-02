@@ -6,6 +6,12 @@
       <description>Last 10 notes on arunim.fyi</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Deciding if something is on the frontier</title>
+    <link>https://arunim.fyi/Deciding-if-something-is-on-the-frontier</link>
+    <guid>https://arunim.fyi/Deciding-if-something-is-on-the-frontier</guid>
+    <description>How do you decide if something is on the frontier? I’m a little bit confused. I’ll often want to do analysis which says: take a set of data points, figure out which of the ones are, on the frontier or that are state-of-the-art at the time they are made available, and then plot a trend line so that you can accurately guess what the frontier will be in the future.</description>
+    <pubDate>Wed, 02 Sep 2026 18:30:02 GMT</pubDate>
+  </item><item>
     <title>pareto</title>
     <link>https://arunim.fyi/pareto</link>
     <guid>https://arunim.fyi/pareto</guid>
@@ -59,12 +65,6 @@
     <guid>https://arunim.fyi/advice</guid>
     <description>Some advice, I’ll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn’t advice despite being titled advice, and is instead just reminders of obvious facts about the world.</description>
     <pubDate>Sun, 26 Jul 2026 18:30:07 GMT</pubDate>
-  </item><item>
-    <title>RSI</title>
-    <link>https://arunim.fyi/RSI</link>
-    <guid>https://arunim.fyi/RSI</guid>
-    <description>Defining RSI What is RSI?? I think it means that humans exit the loop of AI development. But like … how much? It could be the case that humans are cheaper than automated alternatives for a large variety of physical labor for some time.</description>
-    <pubDate>Fri, 24 Jul 2026 18:30:08 GMT</pubDate>
   </item>
     </channel>
   </rss>

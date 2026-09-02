@@ -20,3 +20,5 @@ And then there's people like the folks who made [this benchmark](https://edge-be
 TODO I'd like to backtest this on a number of AI-related curves and see whether the convex hull is actually a better predictor of e.g. post-june 2025 data than the running maximum. 
 
 Okay, the hull seems to me to be more principled. The claim is simply that the laggard data points more often than not are not giving you information about the "rate of progress". It's something like, while they are state of the art, they are, but then when you see the next point above it, that should update your understanding of what should have constituted SOTA. I.e. going back and erasing that datapoint from your memory is indeed the right move fairly often. The alternative is something like "rot", where each of these laggard points pulls the trendline down forever. 
+
+The x-axis of course needn't be time—. And indeed when it's not time, but instead something you can measure/vary, then 
