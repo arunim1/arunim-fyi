@@ -1,4 +1,5 @@
 ---
+id: note_01krmkj7vge07agtprnkr7ej78
 public: true
 tags:
   - ai

@@ -1,4 +1,5 @@
 ---
+id: note_01m127ryz0f8k8af2c24nkwksv
 public: true
 ---
 I'm a huge fan of the set of concepts named after [Vilfredo Pareto](https://en.wikipedia.org/wiki/Vilfredo_Pareto). I know nearly nothing about the man himself, but a quick skim of his Wikipedia page suggests that he had some [[vague visions]] which were correct, but maybe didn't quite nail the terminology/definitions himself. Still, it seems he was able to do enough to get us, I don't know, maybe 80% of the way there. 

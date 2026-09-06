@@ -1,4 +1,5 @@
 ---
+id: note_01kxv7wbv8ej3tgf27x896gcvs
 aliases:
   - ch
 tags:

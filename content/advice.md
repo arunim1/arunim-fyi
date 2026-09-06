@@ -1,4 +1,5 @@
 ---
+id: note_01kxyyt040fypa31w7w6y5f9c7
 public: true
 ---
 Some advice, I'll update this occasionally. Note that I think most advice applies to everyone. Some people say all advice is bad, to them I say this isn't advice despite being titled advice, and is instead just reminders of obvious facts about the world.

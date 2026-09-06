@@ -1,4 +1,5 @@
 ---
+id: note_01ksaskkv0ev7t9hxwcs0vvta9
 public: true
 ---
 First, I'll maybe add the set of questions that I'm hoping to answer during the conference. Preferably fairly concrete, to increase the likelihood that I successfully answer them. 

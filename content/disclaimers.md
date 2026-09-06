@@ -1,4 +1,5 @@
 ---
+id: note_01kv4qdengeb2vm557f1dxfpt6
 public: true
 ---
 This is a place for disclaimers, disclosures, credits, and hedges of all sorts. Fairly often I will fall back into the bad habit of being disincentivized from writing or generally broadcasting my thoughts publicly by various concerns that can be mitigated by some kind of kneecapping, disclaimers, or hedges. I'm going to try to centralize all of them into this page rather than putting them all in my writing itself, just so that I can scratch that itch and then keep my writing a place where I have more confidence. 
