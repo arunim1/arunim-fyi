@@ -8,4 +8,4 @@ I have benefited enormously from people being willing to speak with me when I ha
 
 So, it seems fitting that I should offer to reciprocate. I don't know that I have as deep & clear a domain of interest as Patrick, but regardless; **this is a standing invitation: if you want to talk about anything that is of interest (e.g. based on what you see on this site), I want to talk to you.** 
 
-Emailing arunim at this domain is preferred, unless you already have a better way of contacting me. I recommend reading Patrick's post for other tips etc. 
+Emailing arunim at this domain is preferred, unless you already have a better way of contacting me. I recommend reading Patrick's post for other tips! 
