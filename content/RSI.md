@@ -29,3 +29,6 @@ Most of the gains, or the way that the gains have been able to contribute to the
 One heuristic I find compelling as a counterargument to the "bottlenecks view" is the one which says that economic growth rates have been tied to human population for quite some time, and the advent of AI above some capability threshold, likely AGI or similar, results in a spike in the effective population and you should expect a corresponding spike in growth rates. And this sort of spike can be self-perpetuating, as the population of AIs continues to increase alongside the further scientific / AI R&D discoveries. 
 
 The rate of e.g. economic growth while primarily human-driven capped out when the human population plateaued, and you should at minimum expect the AI population to have a much much higher plateau, if it plateaus at all. 
+
+
+open q: how small of an AI model can kick off an RSI loop? 
